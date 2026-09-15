@@ -2,10 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v42**
+**Current revision: v43**
 
 ## Revision History
 
+
+
+### v43 — Client Stories Dynamic Render Fix
+
+- Fixed Client Stories disappearing after an admin edit.
+- API-rendered story cards were being inserted after the site reveal observer had already initialized, leaving them permanently hidden at `opacity: 0`.
+- Dynamic story cards now render immediately visible while preserving the existing static fallback content.
+- Bumped the Stories page script cache key so browsers/Cloudflare load the corrected JavaScript immediately.
 
 ### v42 — Client Stories Admin
 

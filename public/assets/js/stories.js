@@ -13,7 +13,7 @@
         : body;
     }
     const video=s.video?`<details class="testimonial-details"><summary>Watch video</summary><div><video class="voice-video" controls playsinline preload="metadata" ${s.image?`poster="${esc(s.image)}"`:''}><source src="${esc(s.video)}"></video>${s.videoNote?`<p class="video-note">${esc(s.videoNote)}</p>`:''}</div></details>`:'';
-    return `<article class="voice-card" data-reveal>
+    return `<article class="voice-card revealed">
       ${s.image?`<figure class="voice-photo"><img alt="${esc(s.imageAlt||s.title)}" decoding="async" loading="lazy" src="${esc(s.image)}"></figure>`:''}
       <div class="voice-copy">
         <p class="eyebrow">${esc(s.title)}</p>
