@@ -2,9 +2,16 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v32**
+**Current revision: v33**
 
 ## Revision History
+
+
+### v33 — Cloudflare Binding Provisioning Fix
+- **Patch-only update** when the repository already contains v32. The failed v32 build log confirms the v32 admin files are already present in the repository.
+- Pinned the D1 `DB` binding to the database Cloudflare successfully created during the failed v32 deployment.
+- Added the explicit R2 bucket name `goldenheart-dog-images` to the `DOG_IMAGES` binding so Wrangler provisions/binds a real bucket instead of attempting to inherit a binding that did not exist on the previous Worker version.
+- Updated the admin setup notes for the corrected first deployment.
 
 ### v32 — Cloudflare Dog Admin (D1 + R2 + Access)
 - **Full-site upload required for this revision** because the project changes from static-assets-only to a Worker + static-assets application.

@@ -1,6 +1,6 @@
-# Golden Heart v32 — Admin Setup
+# Golden Heart v33 — Admin Setup
 
-This revision adds the Cloudflare-backed dog admin panel. **Use the full-site ZIP for v32** because the Worker configuration and backend structure changed.
+v32 added the Cloudflare-backed dog admin panel. The first v32 deployment successfully created the D1 database but failed while adding the new R2 binding. **v33 fixes that binding configuration. If your GitHub repository already contains the v32 files, use the v33 patch only.**
 
 ## What v32 adds
 
@@ -15,9 +15,9 @@ This revision adds the Cloudflare-backed dog admin panel. **Use the full-site ZI
 - Public dog pages read the live D1 directory, with the bundled v31 roster retained as a fail-safe if the API is unavailable
 - Admin API refuses access unless Cloudflare Access authenticated the request
 
-## 1. Deploy v32
+## 1. Deploy v33
 
-Upload the **full v32 site** to the GitHub repository and let Cloudflare deploy it. `wrangler.jsonc` now requests D1 (`DB`) and R2 (`DOG_IMAGES`) bindings. Current Wrangler supports automatic provisioning when these bindings do not yet have resource IDs/names.
+Apply the **v33 patch** to the repository that already contains v32, then let Cloudflare deploy it. The D1 database created during the failed v32 build is now pinned by ID, and the R2 binding now uses the explicit bucket name `goldenheart-dog-images`.
 
 After deployment, open the Worker in Cloudflare and confirm under **Bindings** that you see:
 
@@ -25,7 +25,7 @@ After deployment, open the Worker in Cloudflare and confirm under **Bindings** t
 - `DOG_IMAGES` — R2 bucket
 - `ASSETS` — static assets
 
-If Cloudflare does not automatically create either resource, create a D1 database and an R2 bucket from the dashboard and bind them using those exact binding names.
+Wrangler should create/bind the named R2 bucket on this deployment. If Cloudflare reports that `goldenheart-dog-images` does not exist rather than provisioning it, create an R2 bucket with that exact name in the dashboard and retry the build. Do **not** create another D1 database; `goldenheart-db` already exists.
 
 ## 2. Protect the admin paths with Cloudflare Access
 

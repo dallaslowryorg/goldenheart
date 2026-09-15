@@ -15,12 +15,15 @@
   },
   "d1_databases": [
     {
-      "binding": "DB"
+      "binding": "DB",
+      "database_name": "goldenheart-db",
+      "database_id": "e9bb0dd0-0d5c-4d06-a62f-6e63e176f269"
     }
   ],
   "r2_buckets": [
     {
-      "binding": "DOG_IMAGES"
+      "binding": "DOG_IMAGES",
+      "bucket_name": "goldenheart-dog-images"
     }
   ],
   "vars": {
