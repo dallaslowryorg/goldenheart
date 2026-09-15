@@ -2,9 +2,16 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v10**
+**Current revision: v11**
 
 ## Revision History
+
+
+### v11 — Whiskey / Ruger Dog Page Asset Correction
+- Rebuilt the **Our Dogs** Whiskey and Ruger image assets directly from the original user-labeled photos.
+- Whiskey now points to a new cache-busted `whiskey-v11.webp` asset showing the formal veteran graduation team photo.
+- Ruger now points to a new cache-busted `ruger-v11.webp` asset showing Ruger in the graduation cap / Grad Squad photo.
+- Updated `dogs.js` to use the new versioned filenames so Cloudflare/browser image caching cannot keep the two photos reversed after deployment.
 
 ### v10 — Nicole Ingraham Founder Photo
 - Replaced the temporary graduation image on the About page with the supplied photo of Nicole Ingraham with two Golden Retrievers.
