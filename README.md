@@ -2,9 +2,17 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v39**
+**Current revision: v40**
 
 ## Revision History
+
+
+### v40 — Stories Navigation
+
+- Added **Stories** to the primary navigation between Veterans and Training, linking to `/stories`.
+- Kept the page title itself as **Client Stories** while using the shorter nav label to avoid crowding the desktop header.
+- No dog data, D1/R2 admin behavior, testimonial content, or photo formatting changed.
+- **Deployment: patch only.**
 
 
 ### v39 — Client Stories Photo Stage Correction

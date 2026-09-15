@@ -8,6 +8,7 @@ const GH = {
     ['Service Dogs','/service-dogs'],
     ['Our Dogs','/dogs'],
     ['Veterans','/veterans'],
+    ['Stories','/stories'],
     ['Training','/training'],
     ['Process','/process'],
     ['About','/about'],
