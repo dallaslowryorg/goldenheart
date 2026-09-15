@@ -2,9 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v36**
+**Current revision: v37**
 
 ## Revision History
+
+
+### v37 — Client Stories Equal-Card Layout
+- Removed the oversized featured-story treatment from the Client Stories page.
+- Moved Mara P. & Alfredo into the same testimonial-card grid as every other client story.
+- Moved Brielle & Bear into the same card grid; their video is now available behind a compact **Watch video** expander instead of occupying a separate full-width feature section.
+- Kept every supplied testimonial and approved photo/video intact while making the page easier to scan on desktop and mobile.
+- No D1, R2, Access, admin-panel, dog-directory, or homepage changes.
+- **Deployment: patch only.**
 
 
 ### v36 — D1 Schema Initialization Fix
