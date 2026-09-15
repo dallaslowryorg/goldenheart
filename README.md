@@ -2,9 +2,16 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v11**
+**Current revision: v12**
 
 ## Revision History
+
+
+### v12 — Our Dogs Whiskey / Ruger Photo Swap
+- Swapped the **Whiskey** and **Ruger** image assignments specifically in the **Our Dogs** roster.
+- Whiskey now uses the photo that was previously displayed on Ruger’s card.
+- Ruger now uses the photo that was previously displayed on Whiskey’s card.
+- No other dog records were changed in this revision.
 
 
 ### v11 — Whiskey / Ruger Dog Page Asset Correction

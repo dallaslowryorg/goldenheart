@@ -22,10 +22,10 @@ window.GOLDEN_HEART_DOGS = [
   {name:'Bear', year:'2026', status:'Graduate', group:'graduate', image:'bear.webp', blurb:'Bear is a 2026 Golden Heart Service Dogs graduate.'},
   {name:'Rango', year:'2026', status:'Graduate', group:'graduate', image:'rango.webp', blurb:'Rango is a 2026 Golden Heart Service Dogs graduate.'},
   {name:'Ruby', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruby.webp', blurb:'Ruby is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
-  {name:'Whiskey', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'whiskey-v11.webp', blurb:'Whiskey is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
+  {name:'Whiskey', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruger-v11.webp', blurb:'Whiskey is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Murphy', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'murphy.webp', blurb:'Murphy is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Remington', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'remington.webp', blurb:'Remington is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
-  {name:'Ruger', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruger-v11.webp', blurb:'Ruger is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'}
+  {name:'Ruger', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'whiskey-v11.webp', blurb:'Ruger is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'}
 ];
 
 // Counts that include confirmed Golden Heart placements not shown as public dog profiles.
