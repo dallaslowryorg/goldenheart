@@ -2,9 +2,22 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v31**
+**Current revision: v32**
 
 ## Revision History
+
+### v32 — Cloudflare Dog Admin (D1 + R2 + Access)
+- **Full-site upload required for this revision** because the project changes from static-assets-only to a Worker + static-assets application.
+- Added `/admin` as a mobile-friendly dog-directory management panel.
+- Added create, edit, hide/show, photo replacement, and delete controls for dog profiles.
+- Added a Cloudflare D1-backed live dog directory and automatic first-run import of the existing v31 roster.
+- Added an R2-backed image upload pipeline for photos uploaded through the admin panel; browser-side resizing converts normal photos to optimized WebP before upload when supported.
+- Added authenticated admin API endpoints; they refuse access unless Cloudflare Access has authenticated the request.
+- Added same-origin checks for create/update/delete/upload requests.
+- Updated the public dog roster to load current D1 data from `/api/dogs`, while retaining the existing bundled roster as a fail-safe if the database/API is unavailable.
+- Added `ADMIN-SETUP.md` with the one-time Cloudflare D1, R2, and Access configuration steps.
+- Access authorization is intentionally configured in Cloudflare rather than hard-coded, so the initial test can allow Scott's email and Nicole can be added later without another code revision.
+
 
 ### v31 — Expanded Client Testimonials
 - Added seven approved client/family testimonials to the Client Stories page: Quincey Contrill & Oakley, Scott & Ruby, Solomon & Whiskey, Jeremy & Remington, Debbie & Winnie, Sheila & Lucy, and Jerry & Ruger.

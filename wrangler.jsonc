@@ -1,9 +1,29 @@
 {
   "name": "goldenheart",
-  "compatibility_date": "2026-09-14",
+  "main": "./src/index.js",
+  "compatibility_date": "2026-09-15",
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "run_worker_first": [
+      "/api/*",
+      "/admin*",
+      "/media/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOG_IMAGES"
+    }
+  ],
+  "vars": {
+    "ADMIN_EMAILS": ""
   }
 }

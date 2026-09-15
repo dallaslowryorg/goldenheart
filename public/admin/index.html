@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Golden Heart Admin</title>
+<link rel="icon" href="/assets/images/site/favicon.png">
+<link rel="stylesheet" href="/assets/css/admin.css">
+<script defer src="/assets/js/admin.js"></script>
+</head>
+<body>
+<header class="admin-header">
+  <div><p class="kicker">Golden Heart Service Dogs</p><h1>Dog Directory Admin</h1></div>
+  <div class="admin-user"><span id="admin-user">Signed in</span><a href="/dogs" target="_blank" rel="noopener">View public page ↗</a></div>
+</header>
+<main class="admin-shell">
+  <section class="admin-toolbar" aria-label="Dog directory controls">
+    <div><strong id="dog-total">0 dogs</strong><span id="save-status" role="status" aria-live="polite"></span></div>
+    <div class="toolbar-actions"><input id="dog-search" type="search" placeholder="Search dogs" aria-label="Search dogs"><button class="button primary" id="add-dog" type="button">+ Add Dog</button></div>
+  </section>
+  <section id="admin-alert" class="admin-alert" hidden role="alert"></section>
+  <section id="dog-list" class="admin-list" aria-live="polite"><p class="loading">Loading dog directory…</p></section>
+</main>
+
+<dialog id="dog-dialog" class="dog-dialog">
+<form id="dog-form" method="dialog">
+  <div class="dialog-header"><div><p class="kicker">Dog profile</p><h2 id="dialog-title">Add Dog</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button></div>
+  <input type="hidden" name="id">
+  <input type="hidden" name="image">
+  <div class="form-grid">
+    <label class="span-2">Name <input name="name" required maxlength="100"></label>
+    <label>Breed <input name="breed" maxlength="100"></label>
+    <label>Sex <input name="sex" maxlength="60"></label>
+    <label>Age <input name="age" maxlength="80" placeholder="1½ years"></label>
+    <label>Location <input name="location" maxlength="120"></label>
+    <label>Status group
+      <select name="group" required>
+        <option value="available">Available</option>
+        <option value="pending">Pending</option>
+        <option value="matched">Matched / Transitioning</option>
+        <option value="partner">Veteran Organization Placement</option>
+        <option value="graduate">Graduate</option>
+      </select>
+    </label>
+    <label>Public status <input name="status" required maxlength="200" placeholder="Available for Pairing / Contract"></label>
+    <label>Program progress <input name="progress" maxlength="200" placeholder="75% through program"></label>
+    <label>Graduation year <input name="year" maxlength="20" placeholder="2026"></label>
+    <label>Display order <input name="sortOrder" type="number" step="1" value="100"></label>
+    <label class="span-2">Training focus <textarea name="specialties" rows="3" placeholder="PTSD&#10;Psychiatric Support&#10;Autism Support"></textarea><small>One per line or comma-separated.</small></label>
+    <label class="span-2">Profile description <textarea name="blurb" rows="5" maxlength="5000"></textarea></label>
+    <fieldset class="span-2 checks"><legend>Flags</legend><label><input type="checkbox" name="veteranPlacement"> Veteran placement</label><label><input type="checkbox" name="visible" checked> Show on public site</label></fieldset>
+    <div class="span-2 photo-editor">
+      <div class="photo-preview-wrap"><img id="photo-preview" alt="Current dog profile photo" hidden><div id="photo-empty">No photo selected</div></div>
+      <div><label>Profile photo <input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label><small>Uploads are resized in your browser before being saved. JPG, PNG or WebP recommended.</small><button type="button" class="button subtle" id="clear-photo">Remove photo from profile</button></div>
+    </div>
+  </div>
+  <div class="dialog-footer"><button class="button danger" id="delete-dog" type="button" hidden>Delete Dog</button><div class="right-actions"><button class="button subtle" id="cancel-dialog" type="button">Cancel</button><button class="button primary" id="save-dog" type="submit">Save Dog</button></div></div>
+</form>
+</dialog>
+</body>
+</html>
