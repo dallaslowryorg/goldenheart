@@ -6,10 +6,11 @@ window.GOLDEN_HEART_DOGS = [
   {name:'Mulan', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'mulan.webp', blurb:'Mulan is continuing foundational training and evaluation as a service-dog prospect.'},
   {name:'Ariel', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'ariel.webp', blurb:'Ariel is continuing foundational training and evaluation as a service-dog prospect.'},
 
-  {name:'Oakley', location:'Oklahoma', status:'Full-Time Placement • Graduating Soon', group:'matched', image:'oakley.webp', imageFilter:'brightness(1.08) saturate(.94)', blurb:'Oakley has moved into full-time life with a client in Oklahoma and is approaching graduation.'},
+  {name:'Oakley', breed:'Golden Retriever', sex:'Female', age:'1½ years', location:'Oklahoma', status:'Matched with Client • 80% Complete', progress:'80% through program', group:'matched', image:'oakley.webp', specialties:['Psychiatric Support','Autism Support'], blurb:'Oakley is approximately 80% through her Golden Heart program for a client in Oklahoma. Her training is focused on psychiatric support and autism support.'},
   {name:'Winston', location:'Arkansas', status:'Transitioning to Full-Time • Graduating Soon', group:'matched', image:'winston.webp', imageFilter:'saturate(.82) brightness(.96)', blurb:'Winston is preparing to transition into full-time placement with a client in Arkansas and is nearing graduation.'},
-  {name:'Flounder', location:'Florida', status:'Paired with Client', group:'matched', image:'flounder.webp', blurb:'Flounder has been paired with a client in Florida and is no longer available.'},
-  {name:'Max', age:'1 year', location:'Connecticut', status:'Paired with Client', group:'matched', veteranPlacement:true, image:'max.webp', blurb:'Max has been paired with a veteran client in Connecticut and is no longer available.'},
+  {name:'Flounder', breed:'Golden Retriever', sex:'Male', age:'11 months', location:'Florida', status:'Paired with Client • Midway', progress:'Midway through program', group:'matched', image:'flounder.webp', specialties:['PTSD','Psychiatric Support','Autism Support'], blurb:'Flounder is midway through his Golden Heart program for a client in Florida. His training is focused on PTSD, psychiatric support, and autism support.'},
+  {name:'Max', breed:'Golden Retriever', sex:'Male', age:'1 year', location:'Connecticut', status:'Paired with Veteran Client • 75% Complete', progress:'75% through program', group:'matched', veteranPlacement:true, image:'max.webp', specialties:['PTSD','Psychiatric Support','Detection','Bedbug Detection','Educational Tool'], blurb:'Max is approximately 75% through his Golden Heart program. Next month, he is scheduled to transition to Connecticut full-time with his veteran handler. His training includes PTSD and psychiatric support, detection work, bedbug detection, and educational work.'},
+  {name:'Liberty', breed:'Golden Retriever', sex:'Female', age:'1½ years', location:'Michigan', status:'Midway Through Program', progress:'Midway through program', group:'matched', image:'liberty.webp', specialties:['PTSD','Psychiatric Support','Autism Support'], blurb:'Liberty is midway through her Golden Heart program and is preparing for work with her client in Michigan. Her training is focused on PTSD, psychiatric support, and autism support.'},
   {name:'Lily', age:'8 months', location:'Oklahoma', status:'Paired with Client', group:'matched', image:'lily.webp', blurb:'Lily has been paired with a client in Oklahoma and is no longer available.'},
 
   {name:'Theo', age:'8 months', status:'Placed with Veteran Organization', group:'partner', image:'theo.webp', blurb:'Theo has been placed with a veteran organization and is no longer available through Golden Heart.'},
@@ -20,7 +21,7 @@ window.GOLDEN_HEART_DOGS = [
   {name:'Winnie', year:'2025', status:'Graduate', group:'graduate', image:'winnie.webp', blurb:'Winnie is a 2025 Golden Heart Service Dogs graduate.'},
   {name:'Alfredo', year:'2026', status:'Graduate', group:'graduate', image:'alfredo.webp', blurb:'Alfredo is a 2026 Golden Heart Service Dogs graduate.'},
   {name:'Bear', year:'2026', status:'Graduate', group:'graduate', image:'bear.webp', blurb:'Bear is a 2026 Golden Heart Service Dogs graduate.'},
-  {name:'Rango', year:'2026', status:'Graduate', group:'graduate', image:'rango.webp', blurb:'Rango is a 2026 Golden Heart Service Dogs graduate.'},
+  {name:'Rango', breed:'Golden Retriever', sex:'Male', age:'1½ years', location:'Alabama', year:'2026', status:'Graduate', group:'graduate', image:'rango.webp', specialties:['PTSD','Psychiatric Support','Autism Support'], blurb:'Rango is a 2026 Golden Heart Service Dogs graduate working with his handler in Alabama. His training includes PTSD, psychiatric support, and autism support.'},
   {name:'Ruby', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruby.webp', blurb:'Ruby is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Whiskey', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'whiskey-current.webp', blurb:'Whiskey is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Murphy', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'murphy.webp', blurb:'Murphy is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
@@ -36,7 +37,7 @@ window.GOLDEN_HEART_PROGRAM_COUNTS = {
 };
 
 function dogCard(dog){
-  const chips=[dog.age, dog.sex, dog.location].filter(Boolean);
+  const chips=[dog.breed, dog.age, dog.sex, dog.location].filter(Boolean);
   if(dog.veteranPlacement) chips.push('Veteran Placement');
   const statusClass=dog.group==='available'?'available':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
   const badgeLabel={available:'Available',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;
@@ -47,7 +48,8 @@ function dogCard(dog){
     <div class="dog-card-body">
       <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${badgeLabel}</span></div>
       ${chips.length?`<div class="chips">${chips.map(x=>`<span${x==='Veteran Placement'?' class="veteran-placement-chip"':''}>${x}</span>`).join('')}</div>`:''}
-      <p class="dog-stage">${stage}</p>
+      <p class="dog-stage">${dog.progress || stage}</p>
+      ${dog.specialties?.length?`<p class="dog-specialties"><strong>Training focus:</strong> ${dog.specialties.join(' • ')}</p>`:''}
       <p class="dog-blurb">${dog.blurb}</p>
     </div>
   </article>`;

@@ -2,9 +2,25 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v16**
+**Current revision: v18**
 
 ## Revision History
+
+### v18 — Expanded Dog Profiles: Max, Liberty, Flounder, Rango & Oakley
+- Added Liberty to the Our Dogs roster with her supplied photo and confirmed profile: Golden Retriever, female, 1½ years old, midway through her program, Michigan, with PTSD, psychiatric-support, and autism-support training focus.
+- Updated Flounder with the newly supplied photo and confirmed profile: Golden Retriever, male, 11 months old, midway through his program, Florida, with PTSD, psychiatric-support, and autism-support training focus.
+- Updated Rango with the newly supplied handler photo and confirmed graduate profile: Golden Retriever, male, 1½ years old, 2026 graduate in Alabama, with PTSD, psychiatric-support, and autism-support training focus.
+- Updated Oakley with the newly supplied photo and confirmed profile: Golden Retriever, female, 1½ years old, approximately 80% through her program in Oklahoma, with psychiatric-support and autism-support training focus.
+- Reconfirmed Max's supplied lake-side portrait and existing profile: Golden Retriever, male, 1 year old, approximately 75% through his program, transitioning to Connecticut full-time with his veteran handler next month, with PTSD, psychiatric-support, detection, bedbug-detection, and educational work.
+- Matched/transitioning roster count now includes Liberty automatically through the dynamic dog-directory count.
+
+
+### v17 — Max Profile & Transition Update
+- Replaced Max's Our Dogs / Veterans roster image with the newly supplied lake-side service-dog portrait.
+- Added Max's confirmed breed and sex: Golden Retriever, male, age 1 year.
+- Updated Max to approximately 75% through his program and scheduled to transition to Connecticut full-time with his veteran handler next month.
+- Added Max's confirmed training focus: PTSD, psychiatric support, detection, bedbug detection, and educational work.
+- Expanded dog cards to support optional breed, program-progress, and training-focus details when confirmed for an individual dog.
 
 ### v16 — Service-Dog Program Detail, Pairing & Forever Care
 - Updated all three service-dog program ranges to Nicole's current figures: Level One $7,500–$10,500, Level Two $12,500–$16,000, and Level Three $18,000–$22,000.

@@ -227,3 +227,7 @@ img{height:auto}
 .text-link{display:inline-block;margin-top:.45rem;color:var(--green);font-weight:800;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .text-link:hover{text-decoration-thickness:2px}
 .card h3 a{overflow-wrap:anywhere}
+
+/* v17: optional training-focus details on dog cards */
+.dog-specialties{margin:.45rem 0 .55rem;font-size:.92rem;line-height:1.45;color:var(--ink-soft,#655f55)}
+.dog-specialties strong{color:var(--ink,#26231f)}
