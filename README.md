@@ -2,9 +2,19 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v45**
+**Current revision: v46**
 
 ## Revision History
+
+
+### v46 — Dog Sex Dropdown
+
+- Changed **Sex** on the dog Add/Edit form from a free-text field to a dropdown.
+- Options are **Male** and **Female**, with a blank **Select sex** option so the field remains optional.
+- Existing dog records using Male/Female continue to load correctly when editing.
+- No change was made to Client Stories.
+- No D1 schema migration is required.
+- **Deployment: patch only.**
 
 
 ### v45 — Dog Profile Field Cleanup
