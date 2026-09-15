@@ -2,9 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v38**
+**Current revision: v39**
 
 ## Revision History
+
+
+### v39 — Client Stories Photo Stage Correction
+
+- Replaced the landscape/fixed-height testimonial image stage with a consistent square stage.
+- Kept `object-fit: contain` so the complete approved photo remains visible instead of being cropped.
+- Added a page-level override on `stories.html` so older global image rules cannot force a crop.
+- Added a `?v=39` stylesheet cache-buster on the Client Stories page so browsers and Cloudflare fetch the revised photo CSS immediately.
+- No testimonial text, names, metadata, or media files changed.
 
 ### v38 — Client Stories Photo Sizing & Placement
 - Standardized every Client Stories card to a consistent portrait-friendly photo stage instead of forcing portrait source photos into landscape crops.
