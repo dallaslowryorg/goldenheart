@@ -40,8 +40,50 @@ function textValue(value, max = 5000) {
 
 function parseSpecialties(value) {
   if (Array.isArray(value)) return value.map(v => String(v).trim()).filter(Boolean).slice(0, 30);
-  if (typeof value === 'string') return value.split(/\n|,/).map(v => v.trim()).filter(Boolean).slice(0, 30);
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed.startsWith('[')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) return parsed.map(v => String(v).trim()).filter(Boolean).slice(0, 30);
+      } catch {}
+    }
+    return value.split(/\n|,/).map(v => v.trim()).filter(Boolean).slice(0, 30);
+  }
   return [];
+}
+
+function statusForGroup(group) {
+  return ({
+    available: 'Available',
+    pending: 'Pending',
+    matched: 'Matched / Transitioning',
+    partner: 'Veteran Organization Placement',
+    graduate: 'Graduate'
+  })[group] || 'Available';
+}
+
+function buildDogBlurb(dog) {
+  const location = dog.location ? ` in ${dog.location}` : '';
+  const handler = dog.handlerName ? ` with ${dog.handlerName}` : '';
+  let sentence;
+  if (dog.group === 'graduate') {
+    sentence = `${dog.name} is a ${dog.year ? `${dog.year} ` : ''}Golden Heart Service Dogs graduate${handler}${location}.`;
+  } else if (dog.group === 'partner') {
+    sentence = `${dog.name} has been placed with a veteran organization and is no longer available through Golden Heart.`;
+  } else if (dog.group === 'matched') {
+    sentence = `${dog.name} has been matched with a client${location} and is no longer available.`;
+    if (dog.progress) sentence += ` Current program progress: ${dog.progress}.`;
+  } else if (dog.group === 'pending') {
+    sentence = `${dog.name}'s current status is pending${location}.`;
+    if (dog.progress) sentence += ` Current program progress: ${dog.progress}.`;
+  } else {
+    sentence = `${dog.name} is currently available for pairing consideration through Golden Heart Service Dogs.`;
+    if (dog.progress) sentence += ` Current program progress: ${dog.progress}.`;
+  }
+  if (dog.specialties?.length) sentence += ` Training focus includes ${dog.specialties.join(', ')}.`;
+  if (dog.veteranPlacement) sentence += ` This is a veteran service-dog placement.`;
+  return sentence.slice(0, 5000);
 }
 
 function rowToDog(row) {
@@ -246,27 +288,29 @@ function dogPayload(body, existing = {}) {
   const name = textValue(body.name ?? existing.name, 100);
   if (!name) throw new Error('Name is required.');
   const group = groups.has(body.group) ? body.group : (existing.group_name || 'available');
-  const sortOrder = Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : Number(existing.sort_order || 100);
-  return {
+  const sameGroup = Boolean(existing.group_name) && group === existing.group_name;
+  const dog = {
     name,
     slug: slugify(body.slug || name),
     handlerName: nullable(body.handlerName ?? existing.handler_name, 120),
-    breed: nullable(body.breed, 100),
-    sex: nullable(body.sex, 60),
-    age: nullable(body.age, 80),
-    location: nullable(body.location, 120),
-    status: textValue(body.status || existing.status || 'Available', 200),
-    progress: nullable(body.progress, 200),
+    breed: nullable(body.breed ?? existing.breed, 100),
+    sex: nullable(body.sex ?? existing.sex, 60),
+    age: nullable(body.age ?? existing.age, 80),
+    location: nullable(body.location ?? existing.location, 120),
+    status: body.status !== undefined ? textValue(body.status, 200) : (sameGroup && existing.status ? existing.status : statusForGroup(group)),
+    progress: ['available','pending','matched'].includes(group) ? nullable(body.progress ?? existing.progress, 200) : null,
     group,
-    image: nullable(body.image, 500),
-    imageFilter: nullable(body.imageFilter, 200),
-    specialties: parseSpecialties(body.specialties),
-    blurb: textValue(body.blurb, 5000),
+    image: nullable(body.image ?? existing.image, 500),
+    imageFilter: nullable(body.imageFilter ?? existing.image_filter, 200),
+    specialties: parseSpecialties(body.specialties ?? existing.specialties),
+    blurb: textValue(body.blurb ?? existing.blurb, 5000),
     veteranPlacement: body.veteranPlacement === true || body.veteranPlacement === 1 || body.veteranPlacement === 'true',
-    year: nullable(body.year, 20),
-    sortOrder,
+    year: group === 'graduate' ? nullable(body.year ?? existing.year, 20) : null,
+    sortOrder: Number(existing.sort_order || 100),
     visible: body.visible === false || body.visible === 0 || body.visible === 'false' ? 0 : 1
   };
+  if (!dog.blurb) dog.blurb = buildDogBlurb(dog);
+  return dog;
 }
 
 async function listDogs(env, includeHidden = false) {
@@ -280,6 +324,8 @@ async function createDog(request, env) {
   if (!checkMutationOrigin(request)) return json({ error: 'Invalid request origin.' }, 403);
   const body = await request.json();
   const dog = dogPayload(body);
+  const maxSort = await env.DB.prepare('SELECT COALESCE(MAX(sort_order), 0) AS max_sort FROM dogs').first();
+  dog.sortOrder = Number(maxSort?.max_sort || 0) + 10;
   const exists = await env.DB.prepare('SELECT id FROM dogs WHERE slug = ?').bind(dog.slug).first();
   if (exists) return json({ error: 'A dog with that name/slug already exists.' }, 409);
   const result = await env.DB.prepare(`

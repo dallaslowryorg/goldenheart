@@ -1,6 +1,6 @@
-# Golden Heart v36 — Admin Setup
+# Golden Heart v44 — Admin Setup
 
-v32 added the Cloudflare-backed dog admin panel. v33 fixed the D1/R2 bindings, v34 fixed Cloudflare Access authentication behind Static Assets, v35 hardened first-run request sequencing, and **v36 fixes the D1 schema bootstrap itself by executing each complete schema statement separately instead of passing a multi-line `CREATE TABLE` through `D1Database.exec()`.**
+v32 added the Cloudflare-backed dog admin panel. Later revisions completed Access authentication, D1/R2 setup, Handler / Client names, Client Stories management, and dynamic public rendering. **v44 simplifies the dog editor for everyday use while preserving the existing D1 data model and current dog records.**
 
 ## What v32 adds
 
@@ -57,6 +57,19 @@ Test in this order:
 3. Upload a replacement photo to a test dog.
 4. Add a temporary test dog.
 5. Delete the temporary test dog.
+
+
+## Dog editor behavior (v44+)
+
+The dog form intentionally hides implementation details that Nicole should not have to manage:
+
+- **Status** is one selector instead of separate internal/public status fields.
+- **Program progress** appears only for Available, Pending, and Matched/In Training/Transitioning dogs.
+- **Graduation year** appears only for Graduates.
+- **Display order** is automatic. Existing dogs keep their current order and new dogs are added after the current roster.
+- **Handler / Client name** is optional and can be left blank for available dogs or privacy-sensitive placements.
+- **Profile description** is optional. If it is blank when saved, the Worker creates a simple public description from the profile details.
+- Switching a dog to Graduate clears obsolete progress text; switching away from Graduate clears the graduation year.
 
 ## Security notes
 

@@ -2,9 +2,22 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v43**
+**Current revision: v44**
 
 ## Revision History
+
+### v44 — Simplified Dog Admin Form
+
+- Simplified the dog editor so Nicole only sees fields she actually needs for day-to-day profile maintenance.
+- Combined **Status group** and **Public status** into one **Status** selector. Existing custom public status wording is preserved when the dog remains in the same status group; changing status uses the standard public label for the new group.
+- Hid **Program progress** unless the dog is Available, Pending, or Matched/In Training/Transitioning.
+- Hid **Graduation year** unless the dog is marked Graduate.
+- Removed **Display order** from the dog form. Existing dogs keep their current order; newly added dogs are automatically placed after the current roster.
+- Kept Handler / Client name optional for privacy and for dogs that have not yet been paired.
+- Made Profile description optional; if left blank, the Worker generates a basic description from the dog's status, location, progress, training focus, graduation year, and veteran-placement flag.
+- When a dog becomes a Graduate, old program-progress text is cleared automatically. When a dog is no longer a Graduate, graduation year is cleared automatically.
+- No D1 schema migration is required. Existing dog records and photos are preserved.
+- **Deployment: patch only.**
 
 
 

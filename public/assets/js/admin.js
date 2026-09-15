@@ -13,6 +13,17 @@ function imageSrc(image){
 function esc(value=''){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function groupLabel(group){return ({available:'Available',pending:'Pending',matched:'Matched / Transitioning',partner:'Veteran Organization Placement',graduate:'Graduate'})[group]||group;}
 
+function syncDogFields(){
+  const group=form.elements.group.value;
+  const showProgress=['available','pending','matched'].includes(group);
+  const showYear=group==='graduate';
+  const progressField=$('#progress-field'),yearField=$('#year-field');
+  if(progressField) progressField.hidden=!showProgress;
+  if(yearField) yearField.hidden=!showYear;
+  if(!showProgress) form.elements.progress.value='';
+  if(!showYear) form.elements.year.value='';
+}
+
 async function api(path,options={}){
   const response=await fetch(path,{headers:{'Accept':'application/json',...(options.body instanceof FormData?{}:{'Content-Type':'application/json'}),...(options.headers||{})},...options});
   const payload=await response.json().catch(()=>({}));
@@ -64,10 +75,8 @@ function openDog(dog=null){
   form.elements.age.value=dog?.age||'';
   form.elements.location.value=dog?.location||'';
   form.elements.group.value=dog?.group||'available';
-  form.elements.status.value=dog?.status||'Available';
   form.elements.progress.value=dog?.progress||'';
   form.elements.year.value=dog?.year||'';
-  form.elements.sortOrder.value=dog?.sortOrder??100;
   form.elements.specialties.value=(dog?.specialties||[]).join('\n');
   form.elements.blurb.value=dog?.blurb||'';
   form.elements.veteranPlacement.checked=Boolean(dog?.veteranPlacement);
@@ -76,6 +85,7 @@ function openDog(dog=null){
   setPhoto(dog?.image||'');
   $('#dialog-title').textContent=dog?`Edit ${dog.name}`:'Add Dog';
   $('#delete-dog').hidden=!dog;
+  syncDogFields();
   dialog.showModal();
 }
 
@@ -115,7 +125,6 @@ form.addEventListener('submit',async e=>{
     data.image=image||'';
     data.veteranPlacement=form.elements.veteranPlacement.checked;
     data.visible=form.elements.visible.checked;
-    data.sortOrder=Number(data.sortOrder||100);
     data.specialties=form.elements.specialties.value;
     const id=form.elements.id.value;
     $('#save-status').textContent='Saving…';
@@ -142,5 +151,6 @@ $('#close-dialog').addEventListener('click',()=>dialog.close());
 $('#cancel-dialog').addEventListener('click',()=>dialog.close());
 $('#clear-photo').addEventListener('click',()=>{setPhoto('');$('#photo-file').value='';});
 $('#photo-file').addEventListener('change',()=>{const file=$('#photo-file').files?.[0];if(file){const url=URL.createObjectURL(file);$('#photo-preview').src=url;$('#photo-preview').hidden=false;$('#photo-empty').hidden=true;}});
+form.elements.group.addEventListener('change',syncDogFields);
 dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
 load();

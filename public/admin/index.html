@@ -7,7 +7,7 @@
 <title>Golden Heart Admin</title>
 <link rel="icon" href="/assets/images/site/favicon.png">
 <link rel="stylesheet" href="/assets/css/admin.css">
-<script defer src="/assets/js/admin.js?v=42"></script>
+<script defer src="/assets/js/admin.js?v=44"></script>
 </head>
 <body>
 <header class="admin-header">
@@ -35,21 +35,19 @@
     <label>Sex <input name="sex" maxlength="60"></label>
     <label>Age <input name="age" maxlength="80" placeholder="1½ years"></label>
     <label>Location <input name="location" maxlength="120"></label>
-    <label>Status group
+    <label class="span-2">Status
       <select name="group" required>
-        <option value="available">Available</option>
+        <option value="available">Available / Prospect</option>
         <option value="pending">Pending</option>
-        <option value="matched">Matched / Transitioning</option>
+        <option value="matched">Matched / In Training / Transitioning</option>
         <option value="partner">Veteran Organization Placement</option>
         <option value="graduate">Graduate</option>
       </select>
     </label>
-    <label>Public status <input name="status" required maxlength="200" placeholder="Available for Pairing / Contract"></label>
-    <label>Program progress <input name="progress" maxlength="200" placeholder="75% through program"></label>
-    <label>Graduation year <input name="year" maxlength="20" placeholder="2026"></label>
-    <label>Display order <input name="sortOrder" type="number" step="1" value="100"></label>
+    <label id="progress-field" class="conditional-field">Program progress <input name="progress" maxlength="200" placeholder="e.g. 75% through program or Midway"></label>
+    <label id="year-field" class="conditional-field" hidden>Graduation year <input name="year" maxlength="20" placeholder="2026"></label>
     <label class="span-2">Training focus <textarea name="specialties" rows="3" placeholder="PTSD&#10;Psychiatric Support&#10;Autism Support"></textarea><small>One per line or comma-separated.</small></label>
-    <label class="span-2">Profile description <textarea name="blurb" rows="5" maxlength="5000"></textarea></label>
+    <label class="span-2">Profile description <textarea name="blurb" rows="5" maxlength="5000" placeholder="Optional — leave blank and Golden Heart will create a simple description from the profile details."></textarea><small>Optional. A basic public description will be generated automatically if this is left blank.</small></label>
     <fieldset class="span-2 checks"><legend>Flags</legend><label><input type="checkbox" name="veteranPlacement"> Veteran placement</label><label><input type="checkbox" name="visible" checked> Show on public site</label></fieldset>
     <div class="span-2 photo-editor">
       <div class="photo-preview-wrap"><img id="photo-preview" alt="Current dog profile photo" hidden><div id="photo-empty">No photo selected</div></div>
