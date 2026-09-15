@@ -2,9 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v52**
+**Current revision: v53**
 
 ## Revision History
+
+### v53 — Homepage Facebook Follow Callout
+
+- Added a prominent **Follow Golden Heart on Facebook** callout near the bottom of the homepage, immediately before the footer.
+- The callout links to Golden Heart Service Dogs' existing Facebook page in a new tab and includes clear accessible labeling.
+- Added responsive desktop/tablet/mobile styling using the existing Golden Heart green, cream, and gold palette.
+- The existing footer Facebook link, Contact-page Facebook card, and Organization structured-data `sameAs` link remain unchanged.
+- No D1, R2, Worker API, Cloudflare Access, or form changes are required.
+- **Deployment: patch only.**
 
 ### v52 — Production QA & Hardening (Forms Excluded)
 
@@ -570,7 +579,7 @@ The included `wrangler.jsonc` deploys the `public/` directory as Workers Static 
 ## Important launch items still needed
 
 1. **Add the Formspree endpoint.** Create the Formspree form with delivery to `gldnheartservicedogs@gmail.com`, then paste its endpoint into `GH.formEndpoint` in `public/assets/js/site.js`. The form is already wired for submission once that value is present.
-2. Add Golden Heart's confirmed **business hours and social-media links** when available.
+2. Business hours and Facebook are now published. Add any future social-media channels when Golden Heart creates/approves them.
 3. Continue expanding individual graduate stories/testimonials as approved content becomes available.
 4. Add any remaining confirmed intake, payment, and Forever Care policy details.
 5. Graduation photos currently supplied for the site are approved for website use. Confirm permission separately for any future non-graduation client photos or stories before publishing them.
