@@ -62,7 +62,7 @@ Test in this order:
 
 - `/api/admin/*` returns 401 unless Cloudflare Access authenticated the request.
 - Mutation requests are same-origin checked.
-- The optional `ADMIN_EMAILS` Worker variable can add a second code-level allowlist, but it is intentionally blank in v32 because the Access policy is the primary authorization layer.
+- The optional `ADMIN_EMAILS` Worker variable can add a second code-level allowlist, but it is intentionally blank because the Access policy is the primary authorization layer. v34 also defines `ACCESS_TEAM_DOMAIN` so the Worker can validate the Access browser session when `ctx.access` is unavailable behind Cloudflare Static Assets.
 - Public visitors can read `/api/dogs`; they cannot write to it.
 - New photos are stored in R2 and served from `/media/...`.
 

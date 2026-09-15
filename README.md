@@ -2,9 +2,16 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v33**
+**Current revision: v34**
 
 ## Revision History
+
+### v34 — Cloudflare Access + Static Assets Authentication Fix
+- Fixed the admin authentication bridge for the Worker Static Assets architecture.
+- Cloudflare documents that `ctx.access` is not passed from the Static Assets router to the user Worker; the admin now falls back to the authenticated `CF_Authorization` session and Cloudflare `get-identity` endpoint.
+- Added the Cloudflare Access team domain as `ACCESS_TEAM_DOMAIN`.
+- No D1 or R2 changes; existing data/bindings remain intact.
+- **Deployment: patch only.**
 
 
 ### v33 — Cloudflare Binding Provisioning Fix

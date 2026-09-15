@@ -109,13 +109,52 @@ async function ensureDatabase(env) {
   if (statements.length) await env.DB.batch(statements);
 }
 
-async function getIdentity(ctx) {
-  if (!ctx.access) return null;
-  try { return await ctx.access.getIdentity(); } catch { return null; }
+function getCookieValue(cookieHeader, name) {
+  const cookies = String(cookieHeader || '').split(';');
+  for (const cookie of cookies) {
+    const idx = cookie.indexOf('=');
+    if (idx < 0) continue;
+    const key = cookie.slice(0, idx).trim();
+    if (key === name) return cookie.slice(idx + 1).trim();
+  }
+  return null;
 }
 
-async function requireAdmin(ctx, env, html = false) {
-  const identity = await getIdentity(ctx);
+async function getIdentity(request, ctx, env) {
+  // Direct Worker Access integrations can expose identity through ctx.access.
+  if (ctx.access) {
+    try {
+      const identity = await ctx.access.getIdentity();
+      if (identity?.email) return identity;
+    } catch {}
+  }
+
+  // Workers with Static Assets currently execute behind an internal assets router,
+  // which does not pass ctx.access to the user Worker. In that case, validate the
+  // browser's Cloudflare Access session against Cloudflare's get-identity endpoint.
+  const accessCookie = getCookieValue(request.headers.get('cookie'), 'CF_Authorization');
+  const teamDomain = String(env.ACCESS_TEAM_DOMAIN || '').replace(/\/$/, '');
+  if (!accessCookie || !teamDomain) return null;
+
+  try {
+    const response = await fetch(`${teamDomain}/cdn-cgi/access/get-identity`, {
+      method: 'GET',
+      headers: {
+        cookie: `CF_Authorization=${accessCookie}`,
+        accept: 'application/json'
+      },
+      redirect: 'manual'
+    });
+    if (!response.ok) return null;
+    const identity = await response.json();
+    return identity?.email ? identity : null;
+  } catch {
+    return null;
+  }
+}
+
+async function requireAdmin(request, ctx, env, html = false) {
+  const identity = await getIdentity(request, ctx, env);
   if (!identity?.email) {
     if (html) {
       return new Response(`<!doctype html><meta charset="utf-8"><title>Golden Heart Admin</title><style>body{font:16px system-ui;margin:3rem;max-width:52rem}code{background:#f4f4f4;padding:.15rem .35rem;border-radius:.25rem}</style><h1>Golden Heart Admin is protected</h1><p>Cloudflare Access has not authenticated this request. Configure Access for <code>/admin*</code> and <code>/api/admin/*</code>, then sign in with an approved email address.</p>`, { status: 401, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
@@ -270,13 +309,13 @@ export default {
       }
 
       if (path === '/admin' || path.startsWith('/admin/')) {
-        const auth = await requireAdmin(ctx, env, true);
+        const auth = await requireAdmin(request, ctx, env, true);
         if (auth instanceof Response) return auth;
         return env.ASSETS.fetch(request);
       }
 
       if (path.startsWith('/api/admin/')) {
-        const auth = await requireAdmin(ctx, env, false);
+        const auth = await requireAdmin(request, ctx, env, false);
         if (auth instanceof Response) return auth;
         await ensureDatabase(env);
 

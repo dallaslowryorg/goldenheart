@@ -27,6 +27,7 @@
     }
   ],
   "vars": {
-    "ADMIN_EMAILS": ""
+    "ADMIN_EMAILS": "",
+    "ACCESS_TEAM_DOMAIN": "https://shrill-glitter-56c5.cloudflareaccess.com"
   }
 }
