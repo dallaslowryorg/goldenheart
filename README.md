@@ -2,9 +2,23 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v15**
+**Current revision: v16**
 
 ## Revision History
+
+### v16 — Service-Dog Program Detail, Pairing & Forever Care
+- Updated all three service-dog program ranges to Nicole's current figures: Level One $7,500–$10,500, Level Two $12,500–$16,000, and Level Three $18,000–$22,000.
+- Added detailed examples of Level One, Level Two, and Level Three task work while preserving case-by-case medical, mobility, and alert limitations.
+- Added a clear explanation that program level is based on actual task/training complexity, environment, dog abilities, and handler preparation—not diagnosis alone.
+- Added program-inclusion details covering obedience, public access, environmental exposure, disability-specific tasks, handler education, transition work, appropriate veterinary care, and ongoing support.
+- Added Golden Heart's four typical payment structures, intake-before-payment policy, halfway-program non-refundable policy, and program-property language, with a clear statement that the signed contract controls.
+- Added confirmed training-timeframe guidance: several months to more than a year, with many dogs requiring roughly 8–10 months or longer and specialized placements potentially exceeding a year.
+- Added the confirmed policy that Golden Heart does not train client-owned dogs for the service-dog program; dogs are selected and provided through Golden Heart.
+- Expanded the pairing process with current documentation requirements and stronger warnings not to submit sensitive documents through the public website form.
+- Added placement-troubleshooting, return/retraining/reassignment language, and more detailed Forever Care / refresher-training guidance.
+- Expanded Nicole Ingraham's training-background section while clarifying that Golden Heart's current public services remain focused on service dogs and occasional therapy-dog training.
+- Expanded the initial website inquiry form to collect basic fit information (service needs, routine, household, prior service-dog experience) without requesting sensitive documents.
+- Updated the homepage brand promise to the confirmed message: “Train. Place. Support.” and “Every dog has a purpose. Every team deserves support.”
 
 
 ### v15 — Inquiry Form Infrastructure & Routing
