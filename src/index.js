@@ -9,6 +9,9 @@ const SCHEMA_STATEMENTS = [
   `CREATE INDEX IF NOT EXISTS idx_stories_sort ON stories(sort_order, title)`
 ];
 
+
+const LEGACY_UNPROFILED_VETERAN_PLACEMENTS = 2;
+
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
   'cache-control': 'no-store'
@@ -337,6 +340,34 @@ async function listDogs(env, includeHidden = false) {
   return (result.results || []).map(rowToDog);
 }
 
+
+async function getProgramCounts(env) {
+  await ensureDatabase(env);
+  const row = await env.DB.prepare(`
+    SELECT
+      COALESCE(SUM(CASE WHEN veteran_placement = 1 THEN 1 ELSE 0 END), 0) AS veteran_profile_placements,
+      COALESCE(SUM(CASE WHEN veteran_placement = 1 AND is_visible = 1 THEN 1 ELSE 0 END), 0) AS veteran_public_profiles,
+      COALESCE(SUM(CASE WHEN group_name = 'partner' THEN 1 ELSE 0 END), 0) AS veteran_organization_placements,
+      COALESCE(SUM(CASE WHEN group_name = 'partner' AND is_visible = 1 THEN 1 ELSE 0 END), 0) AS veteran_organization_public_profiles
+    FROM dogs
+  `).first();
+
+  const veteranProfilePlacements = Number(row?.veteran_profile_placements || 0);
+  const veteranPublicProfiles = Number(row?.veteran_public_profiles || 0);
+  const veteranPlacements = veteranProfilePlacements + LEGACY_UNPROFILED_VETERAN_PLACEMENTS;
+  const veteranOrganizationPlacements = Number(row?.veteran_organization_placements || 0);
+  const veteranOrganizationPublicProfiles = Number(row?.veteran_organization_public_profiles || 0);
+
+  return {
+    veteranPlacements,
+    veteranProfilePlacements,
+    veteranPublicProfiles,
+    veteranUnprofiledPlacements: Math.max(0, veteranPlacements - veteranPublicProfiles),
+    veteranOrganizationPlacements,
+    veteranOrganizationPublicProfiles
+  };
+}
+
 async function createDog(request, env) {
   if (!checkMutationOrigin(request)) return json({ error: 'Invalid request origin.' }, 403);
   const body = await request.json();
@@ -491,8 +522,8 @@ export default {
 
     try {
       if (path === '/api/dogs' && request.method === 'GET') {
-        const dogs = await listDogs(env, false);
-        return json({ dogs }, 200, { 'cache-control': 'public, max-age=30, stale-while-revalidate=120' });
+        const [dogs, counts] = await Promise.all([listDogs(env, false), getProgramCounts(env)]);
+        return json({ dogs, counts }, 200, { 'cache-control': 'public, max-age=30, stale-while-revalidate=120' });
       }
       if (path === '/api/stories' && request.method === 'GET') {
         const stories = await listStories(env, false);

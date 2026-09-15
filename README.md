@@ -2,9 +2,22 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v50**
+**Current revision: v51**
 
 ## Revision History
+
+### v51 — Dynamic Veteran Impact Counts
+
+- Made the veteran-impact totals live instead of hard-coded. The public dog API now returns veteran program counts calculated from D1 on every cached refresh.
+- Checking **Veteran placement** on a dog now automatically updates the veteran client-placement total; unchecking it removes that profile from the live count.
+- The Veterans page automatically renders every visible dog flagged as a veteran placement and updates the public-profile count and the explanatory note beneath the roster.
+- Preserved the two confirmed historical veteran placements that intentionally do not have public dog profiles, so the current baseline remains **7 veteran client placements** while new flagged profiles increase the total automatically.
+- Veteran-organization placement totals are now calculated from live D1 partner records, and the public partner-name strip on the Veterans page is populated from the live dog roster rather than a hard-coded four-name list.
+- Homepage veteran impact statistics use the same live counts from `/api/dogs`.
+- Hidden dog profiles still contribute to confirmed placement totals but are not rendered publicly.
+- No D1 schema migration, R2 change, or Access change is required.
+- **Deployment: patch only.**
+
 
 ### v50 — Program Progress Sync
 

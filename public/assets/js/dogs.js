@@ -36,7 +36,11 @@ window.GOLDEN_HEART_DOGS = [
 // Bo is included in the veteran-placement total but intentionally has no public photo/profile.
 window.GOLDEN_HEART_PROGRAM_COUNTS = {
   veteranPlacements: 7,
-  veteranOrganizationPlacements: 4
+  veteranProfilePlacements: 5,
+  veteranPublicProfiles: 5,
+  veteranUnprofiledPlacements: 2,
+  veteranOrganizationPlacements: 4,
+  veteranOrganizationPublicProfiles: 4
 };
 
 function dogCard(dog){
@@ -135,12 +139,38 @@ function renderDogs(){
 
 function renderVeteranPlacements(){
   const dogs=window.GOLDEN_HEART_DOGS.filter(d=>d.veteranPlacement);
+  const partnerDogs=window.GOLDEN_HEART_DOGS.filter(d=>d.group==='partner');
+  const counts=window.GOLDEN_HEART_PROGRAM_COUNTS;
+
   document.querySelectorAll('[data-veteran-dog-grid]').forEach(grid=>{
     grid.innerHTML=dogs.map(dogCard).join('');
   });
   document.querySelectorAll('[data-veteran-count]').forEach(el=>{
     const key=el.dataset.veteranCount;
-    el.textContent=window.GOLDEN_HEART_PROGRAM_COUNTS[key] ?? 0;
+    el.textContent=counts[key] ?? 0;
+  });
+  document.querySelectorAll('[data-veteran-public-count]').forEach(el=>{
+    el.textContent=counts.veteranPublicProfiles ?? dogs.length;
+  });
+  document.querySelectorAll('[data-veteran-unprofiled-count]').forEach(el=>{
+    el.textContent=counts.veteranUnprofiledPlacements ?? Math.max(0,(counts.veteranPlacements||0)-dogs.length);
+  });
+  document.querySelectorAll('[data-veteran-placement-note]').forEach(el=>{
+    const total=Number(counts.veteranPlacements ?? dogs.length);
+    const publicCount=Number(counts.veteranPublicProfiles ?? dogs.length);
+    const unprofiled=Number(counts.veteranUnprofiledPlacements ?? Math.max(0,total-publicCount));
+    const placementWord=total===1?'placement':'placements';
+    const publicVerb=publicCount===1?'is':'are';
+    const publicWord=publicCount===1?'profile is':'profiles are';
+    if(unprofiled>0){
+      const extraWord=unprofiled===1?'placement is':'placements are';
+      el.innerHTML=`Golden Heart currently counts <strong>${total} confirmed veteran client ${placementWord}</strong>. <strong>${publicCount}</strong> public ${publicWord} represented in the roster above; <strong>${unprofiled}</strong> additional confirmed ${extraWord} included in the total without a public profile.`;
+    }else{
+      el.innerHTML=`Golden Heart currently counts <strong>${total} confirmed veteran client ${placementWord}</strong>. All <strong>${publicCount}</strong> public profiles ${publicVerb} represented in the roster above.`;
+    }
+  });
+  document.querySelectorAll('[data-veteran-partner-strip]').forEach(strip=>{
+    strip.innerHTML=partnerDogs.map(d=>`<span>${d.name}</span>`).join('');
   });
 }
 
@@ -149,8 +179,11 @@ async function loadDogDirectory(){
     const response=await fetch('/api/dogs',{headers:{'Accept':'application/json'}});
     if(!response.ok) throw new Error(`Dog API returned ${response.status}`);
     const payload=await response.json();
-    if(Array.isArray(payload.dogs) && payload.dogs.length){
+    if(Array.isArray(payload.dogs)){
       window.GOLDEN_HEART_DOGS=payload.dogs;
+    }
+    if(payload.counts && typeof payload.counts==='object'){
+      window.GOLDEN_HEART_PROGRAM_COUNTS={...window.GOLDEN_HEART_PROGRAM_COUNTS,...payload.counts};
     }
   }catch(err){
     console.warn('Using bundled dog roster because the live dog directory is unavailable.',err);
