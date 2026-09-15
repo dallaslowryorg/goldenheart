@@ -2,9 +2,21 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v47**
+**Current revision: v48**
 
 ## Revision History
+
+### v48 — Available Dogs Directory Priority
+
+- Removed the live **Available now** dog-card section from the homepage so newly added dogs do not automatically become homepage features.
+- The full **Our Dogs** directory remains the single public roster for dog profiles.
+- On the Our Dogs page, **Available** dogs are always placed at the top of the **All Dogs** view.
+- Within the Available group, newly added D1 profiles appear first based on their creation date. The **Available** filter uses the same newest-first ordering.
+- Other program-stage groups keep their existing relative order.
+- Bumped the dog-directory script cache key to v48 so browsers load the new ordering logic immediately.
+- No D1 schema change, R2 change, Access change, or dog-record migration is required.
+- **Deployment: patch only.**
+
 
 ### v47 — Production .com Launch & SEO URLs
 

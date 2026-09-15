@@ -59,6 +59,26 @@ function dogCard(dog){
   </article>`;
 }
 
+function newestFirst(a,b){
+  const aTime=Date.parse(a.createdAt || '') || 0;
+  const bTime=Date.parse(b.createdAt || '') || 0;
+  return bTime-aTime;
+}
+
+function sortDogDirectory(dogs, active, isDirectory){
+  if(!isDirectory) return dogs;
+  const list=[...dogs];
+  if(active==='available') return list.sort(newestFirst);
+  if(active!=='all') return list;
+  return list.sort((a,b)=>{
+    const aAvailable=a.group==='available';
+    const bAvailable=b.group==='available';
+    if(aAvailable!==bAvailable) return aAvailable ? -1 : 1;
+    if(aAvailable && bAvailable) return newestFirst(a,b);
+    return 0;
+  });
+}
+
 function renderDogs(){
   const validFilters=['all','available','pending','matched','partner','graduate'];
   const hashFilter=window.location.hash.replace('#','');
@@ -70,6 +90,7 @@ function renderDogs(){
 
     const draw=()=>{
       let dogs=window.GOLDEN_HEART_DOGS.filter(d=>active==='all'||d.group===active);
+      dogs=sortDogDirectory(dogs,active,grid.dataset.initialFilter===undefined);
       if(limit>0) dogs=dogs.slice(0,limit);
       grid.innerHTML=dogs.map(dogCard).join('');
       filters.forEach(b=>{
