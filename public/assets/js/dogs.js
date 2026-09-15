@@ -29,31 +29,45 @@ window.GOLDEN_HEART_DOGS = [
 ];
 
 function dogCard(dog){
-  const chips=[dog.age, dog.sex, dog.location, dog.year ? `${dog.year} Graduate` : null].filter(Boolean);
+  const chips=[dog.age, dog.sex, dog.location].filter(Boolean);
   const statusClass=dog.group==='available'?'available':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
+  const badgeLabel={available:'Available',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;
+  const stage=dog.group==='graduate' ? `${dog.year} Graduate` : dog.status;
   const imageStyle=`--dog-filter:${dog.imageFilter||'none'}`;
   return `<article class="dog-card group-${dog.group}" id="${dog.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
-    <div class="dog-photo"><img loading="lazy" style="${imageStyle}" src="/assets/images/dogs/${dog.image}" alt="${dog.name}, Golden Heart service dog${dog.group==='graduate'?' graduate':''}"></div>
+    <div class="dog-photo"><img loading="lazy" decoding="async" style="${imageStyle}" src="/assets/images/dogs/${dog.image}" alt="${dog.name}, Golden Heart service dog${dog.group==='graduate'?' graduate':''}"></div>
     <div class="dog-card-body">
-      <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${dog.status}</span></div>
+      <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${badgeLabel}</span></div>
       ${chips.length?`<div class="chips">${chips.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
-      <p>${dog.blurb}</p>
+      <p class="dog-stage">${stage}</p>
+      <p class="dog-blurb">${dog.blurb}</p>
     </div>
   </article>`;
 }
 
 function renderDogs(){
-  const grid=document.querySelector('[data-dog-grid]');
-  if(!grid) return;
-  const filters=[...document.querySelectorAll('[data-dog-filter]')];
-  let active=grid.dataset.initialFilter || 'all';
-  const draw=()=>{
-    const dogs=window.GOLDEN_HEART_DOGS.filter(d=>active==='all'||d.group===active);
-    grid.innerHTML=dogs.map(dogCard).join('');
-    filters.forEach(b=>b.classList.toggle('active',b.dataset.dogFilter===active));
-  };
-  filters.forEach(btn=>btn.addEventListener('click',()=>{active=btn.dataset.dogFilter;draw();}));
-  draw();
+  document.querySelectorAll('[data-dog-grid]').forEach(grid=>{
+    const filters=[...document.querySelectorAll('[data-dog-filter]')];
+    let active=grid.dataset.initialFilter || 'all';
+    const limit=Number(grid.dataset.limit||0);
+    const draw=()=>{
+      let dogs=window.GOLDEN_HEART_DOGS.filter(d=>active==='all'||d.group===active);
+      if(limit>0) dogs=dogs.slice(0,limit);
+      grid.innerHTML=dogs.map(dogCard).join('');
+      filters.forEach(b=>b.classList.toggle('active',b.dataset.dogFilter===active));
+    };
+    filters.forEach(btn=>btn.addEventListener('click',()=>{active=btn.dataset.dogFilter;draw();}));
+    draw();
+  });
+
+  const counts=window.GOLDEN_HEART_DOGS.reduce((a,d)=>{a[d.group]=(a[d.group]||0)+1;return a;},{all:window.GOLDEN_HEART_DOGS.length});
+  document.querySelectorAll('[data-dog-filter]').forEach(btn=>{
+    const key=btn.dataset.dogFilter;
+    if(btn.dataset.counted==='true') return;
+    const count=counts[key]||0;
+    btn.insertAdjacentHTML('beforeend',` <span class="filter-count">${count}</span>`);
+    btn.dataset.counted='true';
+  });
 }
 
 renderDogs();

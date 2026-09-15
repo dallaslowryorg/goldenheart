@@ -81,3 +81,70 @@ h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.07;margin:0 0
 @media (max-width:1000px){.nav{position:absolute;left:1rem;right:1rem;top:80px;display:none;flex-direction:column;align-items:stretch;background:#fff;padding:1rem;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.nav.open{display:flex}.nav a{text-align:center}.menu-button{display:block}.intro-grid,.feature-split{grid-template-columns:1fr}.feature-split .feature-image{min-height:430px}.card-grid,.dog-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.values{grid-template-columns:1fr;margin-top:1rem}.footer-grid{grid-template-columns:1.3fr 1fr 1fr}.footer-grid>div:last-child{grid-column:1/-1}.cta-band-inner{align-items:flex-start;flex-direction:column}.hero{min-height:610px}.hero-media:after{background:linear-gradient(90deg,rgba(24,30,26,.88),rgba(24,30,26,.48))}}
 @media (max-width:700px){.section{padding:4.3rem 0}.section-sm{padding:3.2rem 0}.header-inner{min-height:72px}.brand img{width:155px;max-height:62px}.hero{min-height:620px}.hero-content{padding:4.5rem 0}.hero h1{font-size:3.25rem}.section-head{align-items:flex-start;flex-direction:column}.card-grid,.dog-grid,.info-grid,.stats,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.steps{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.footer-bottom{flex-direction:column}.photo-mosaic{grid-template-columns:1fr;grid-template-rows:320px 220px 220px}.photo-mosaic .big{grid-row:auto}.rounded-image{min-height:330px}.band-photo{height:330px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}[data-reveal]{opacity:1;transform:none}}
+
+/* --- 2026-09 polish pass --- */
+:focus-visible{outline:3px solid rgba(181,138,42,.55);outline-offset:3px}
+.button,.filter-button,.dog-card,.journey-card{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background-color .2s ease}
+
+/* Dog directory */
+.dog-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.15rem;align-items:stretch}
+.dog-card{display:flex;flex-direction:column;height:100%;box-shadow:0 8px 26px rgba(48,40,29,.065)}
+.dog-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(48,40,29,.11);border-color:#d7c7a8}
+.dog-photo{aspect-ratio:3/4;padding:.35rem;background:linear-gradient(145deg,#f8f3e8,#eee5d4)}
+.dog-photo img{border-radius:16px;background:#f8f3e8}
+.dog-card-body{padding:1.1rem 1.1rem 1.2rem;display:flex;flex-direction:column;flex:1}
+.dog-title-row{align-items:center;gap:.65rem}
+.dog-title-row h3{font-size:1.45rem;margin:0;min-width:0}
+.status{flex:0 0 auto;max-width:none;white-space:nowrap;font-size:.68rem;padding:.38rem .58rem;letter-spacing:.01em}
+.chips{margin:.7rem 0 .55rem}
+.chips span{font-size:.74rem;padding:.22rem .48rem;background:#fffaf0}
+.dog-stage{margin:.1rem 0 .45rem!important;color:var(--gold-dark)!important;font-weight:800;font-size:.8rem!important;line-height:1.35}
+.dog-blurb{margin-top:auto!important;padding-top:.25rem}
+.filter-count{display:inline-grid;place-items:center;min-width:1.4rem;height:1.4rem;padding:0 .32rem;margin-left:.2rem;border-radius:999px;background:var(--cream-2);color:var(--ink);font-size:.7rem;line-height:1}
+.filter-button.active .filter-count{background:rgba(255,255,255,.18);color:white}
+.dog-grid-featured .dog-blurb{min-height:4.45em}
+
+/* Home-page image treatment */
+.rounded-image.portrait-frame{background:linear-gradient(145deg,#f8f3e8,#eee5d4);display:grid;place-items:center;padding:.65rem}
+.rounded-image.portrait-frame img{object-fit:contain;width:100%;height:100%;border-radius:18px;background:#f8f3e8}
+.hero-media img{object-position:center 66%}
+
+/* Visual journey */
+.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem}
+.journey-card{margin:0;border:1px solid var(--line);background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 8px 28px rgba(48,40,29,.06)}
+.journey-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(48,40,29,.1)}
+.journey-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.journey-card:nth-child(2) img{object-position:center 66%}
+.journey-card figcaption{padding:1.15rem 1.2rem 1.25rem;display:grid;gap:.28rem}
+.journey-card figcaption strong{font-family:Georgia,"Times New Roman",serif;font-size:1.35rem;color:var(--ink)}
+.journey-card figcaption span{color:var(--muted);font-size:.92rem}
+.brand-promise{text-align:center;max-width:900px;margin:0 auto}
+.brand-promise h2{font-size:clamp(2.5rem,5vw,4.4rem);letter-spacing:-.03em}
+.brand-promise p{max-width:720px;margin:0 auto;color:var(--muted);font-size:1.08rem}
+
+@media (max-width:1120px){
+  .dog-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:820px){
+  .dog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+  .journey-grid{grid-template-columns:1fr}
+  .journey-card{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+  .journey-card img{height:100%;aspect-ratio:auto;min-height:220px}
+}
+@media (max-width:560px){
+  .shell{width:min(var(--max),calc(100% - 1.25rem))}
+  .dog-grid{grid-template-columns:1fr}
+  .dog-card{border-radius:20px}
+  .dog-photo{aspect-ratio:4/5}
+  .dog-card-body{padding:1rem}
+  .dog-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;margin:0 -.625rem 1.5rem;padding:0 .625rem .35rem;scrollbar-width:none}
+  .dog-filters::-webkit-scrollbar{display:none}
+  .filter-button{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+  .status{font-size:.66rem}
+  .journey-card{display:block}
+  .journey-card img{aspect-ratio:4/3;min-height:0}
+  .hero-media img{object-position:58% 68%}
+  .hero h1{font-size:clamp(2.7rem,13vw,3.45rem)}
+  .hero .lead{font-size:1.05rem}
+  .button-row .button{width:100%}
+}
