@@ -14,8 +14,33 @@ const LEGACY_UNPROFILED_VETERAN_PLACEMENTS = 2;
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
-  'cache-control': 'no-store'
+  'cache-control': 'no-store',
+  'x-content-type-options': 'nosniff',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=()'
 };
+
+const PUBLIC_SECURITY_HEADERS = {
+  'x-content-type-options': 'nosniff',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=()',
+  'x-frame-options': 'SAMEORIGIN'
+};
+
+function withSecurityHeaders(response, extra = {}) {
+  const headers = new Headers(response.headers);
+  for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS)) headers.set(name, value);
+  for (const [name, value] of Object.entries(extra)) headers.set(name, value);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
+async function serveAsset(request, env, extra = {}) {
+  return withSecurityHeaders(await env.ASSETS.fetch(request), extra);
+}
 
 function json(data, status = 200, headers = {}) {
   return new Response(JSON.stringify(data), { status, headers: { ...JSON_HEADERS, ...headers } });
@@ -403,6 +428,10 @@ async function updateDog(id, request, env) {
     JSON.stringify(dog.specialties),dog.blurb,dog.veteranPlacement?1:0,dog.year,dog.sortOrder,dog.visible,id
   ).run();
   const updated = await env.DB.prepare('SELECT * FROM dogs WHERE id = ?').bind(id).first();
+  if (existing.image?.startsWith('/media/') && existing.image !== dog.image && env.DOG_IMAGES) {
+    const oldKey = decodeURIComponent(existing.image.replace(/^\/media\//, ''));
+    try { await env.DOG_IMAGES.delete(oldKey); } catch {}
+  }
   return json({ dog: rowToDog(updated) });
 }
 
@@ -459,6 +488,14 @@ async function updateStory(id, request, env) {
     story.video,story.videoNote,story.collapseBody,story.sortOrder,story.visible,id
   ).run();
   const updated = await env.DB.prepare('SELECT * FROM stories WHERE id = ?').bind(id).first();
+  if (env.DOG_IMAGES) {
+    for (const [oldAsset, newAsset] of [[existing.image, story.image], [existing.video, story.video]]) {
+      if (oldAsset?.startsWith('/media/stories/') && oldAsset !== newAsset) {
+        const oldKey = decodeURIComponent(oldAsset.replace(/^\/media\//, ''));
+        try { await env.DOG_IMAGES.delete(oldKey); } catch {}
+      }
+    }
+  }
   return json({ story: rowToStory(updated) });
 }
 
@@ -512,6 +549,7 @@ async function serveMedia(request, env, url) {
   object.writeHttpMetadata(headers);
   headers.set('etag', object.httpEtag);
   headers.set('cache-control', headers.get('cache-control') || 'public, max-age=31536000, immutable');
+  for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS)) headers.set(name, value);
   return new Response(object.body, { headers });
 }
 
@@ -537,7 +575,7 @@ export default {
       if (path === '/admin' || path.startsWith('/admin/')) {
         const auth = await requireAdmin(request, ctx, env, true);
         if (auth instanceof Response) return auth;
-        return env.ASSETS.fetch(request);
+        return serveAsset(request, env, { 'cache-control': 'no-store' });
       }
 
       if (path.startsWith('/api/admin/')) {
@@ -576,7 +614,7 @@ export default {
         return json({ error: 'Admin endpoint not found.' }, 404);
       }
 
-      return env.ASSETS.fetch(request);
+      return serveAsset(request, env);
     } catch (error) {
       console.error(error);
       const isApi = path.startsWith('/api/');

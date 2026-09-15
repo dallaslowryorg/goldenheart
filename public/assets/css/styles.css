@@ -377,3 +377,17 @@ img{height:auto}
 .video-note{margin:.55rem 0 0;color:var(--muted)!important;font-size:.82rem!important;line-height:1.4!important}
 @media (max-width:900px){.voices-grid{grid-template-columns:1fr}.voice-photo{aspect-ratio:1/1}}
 @media (max-width:640px){.voice-photo{aspect-ratio:1/1;padding:.65rem}.voice-copy{padding:1.15rem}.voice-copy blockquote{font-size:1.25rem}}
+
+/* --- v52 QA: accessibility and production hardening --- */
+.button:not(.button-outline):not(.button-dark):not(.button-light){color:#1f1d18}
+.button:not(.button-outline):not(.button-dark):not(.button-light):hover{color:#fff}
+.button-dark{color:#fff}
+.button-light{color:var(--green-dark)}
+.nav .nav-cta{color:#1f1d18}
+.nav .nav-cta:hover{color:#fff}
+.cta-band .eyebrow{color:#292720}
+.step:before{color:var(--gold-dark)}
+main p a:not(.button),main li a:not(.button){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+main p a:not(.button):hover,main li a:not(.button):hover{text-decoration-thickness:2px}
+.voice-copy h3.eyebrow{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.4}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}

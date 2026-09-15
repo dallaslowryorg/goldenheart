@@ -2,9 +2,28 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v51**
+**Current revision: v52**
 
 ## Revision History
+
+### v52 — Production QA & Hardening (Forms Excluded)
+
+- Completed a production QA pass across all public pages and the Dogs/Stories admin interfaces, intentionally excluding inquiry-form delivery/processing until the planned form work.
+- Verified local internal page/asset references, canonical/sitemap coverage, image alt text, duplicate IDs, heading hierarchy, and JavaScript syntax.
+- Hardened live dog-card rendering by HTML-escaping all admin-managed dog data before inserting it into public markup, including names, handler names, progress, training focus, descriptions, image paths, and veteran-organization labels.
+- Restricted legacy dog image-filter values to a small safe set instead of allowing arbitrary CSS through D1 data.
+- Normalized the bundled fail-safe dog roster so it no longer contains obsolete wording such as “Available for Contract” or Oakley’s former 80% progress value. This does not overwrite live D1 records.
+- Added Cloudflare Static Assets `_headers` security hardening (`nosniff`, referrer policy, permissions policy, and SAMEORIGIN framing) and matching headers for Worker-served admin/media responses.
+- Added an `X-Robots-Tag: noindex, nofollow` rule for the temporary `goldenheart.slowry.workers.dev` hostname so the `.com` remains the search-engine version while the fallback hostname stays enabled.
+- Added cleanup of superseded R2 dog/story media when an admin replaces or removes an uploaded asset, preventing abandoned uploads from accumulating over time.
+- Fixed WCAG color-contrast issues on the gold primary buttons and small gold UI text while preserving the established gold/green brand palette.
+- Added visible inline-link treatment and expanded reduced-motion support.
+- Improved document semantics with missing section headings, semantic Client Story team headings, and accessible names for both admin dialogs.
+- Added explicit width/height attributes to static site images to reduce layout shift while retaining responsive CSS sizing.
+- Tightened several long SEO page descriptions and confirmed sitemap entries exactly match the public canonical page set.
+- Updated `robots.txt` to keep `/admin` and `/api/admin/` out of normal crawling.
+- No D1 schema migration, R2 binding change, Cloudflare Access change, dog/story data overwrite, or form activation is required.
+- **Deployment: patch only.**
 
 ### v51 — Dynamic Veteran Impact Counts
 

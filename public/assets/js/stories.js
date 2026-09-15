@@ -16,7 +16,7 @@
     return `<article class="voice-card revealed">
       ${s.image?`<figure class="voice-photo"><img alt="${esc(s.imageAlt||s.title)}" decoding="async" loading="lazy" src="${esc(s.image)}"></figure>`:''}
       <div class="voice-copy">
-        <p class="eyebrow">${esc(s.title)}</p>
+        <h3 class="eyebrow">${esc(s.title)}</h3>
         ${tags?`<div class="story-meta">${tags}</div>`:''}
         ${s.quote?`<blockquote>“${esc(s.quote)}”</blockquote>`:''}
         ${bodyBlock}
