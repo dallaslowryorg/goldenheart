@@ -2,9 +2,44 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v26**
+**Current revision: v31**
 
 ## Revision History
+
+### v31 — Expanded Client Testimonials
+- Added seven approved client/family testimonials to the Client Stories page: Quincey Contrill & Oakley, Scott & Ruby, Solomon & Whiskey, Jeremy & Remington, Debbie & Winnie, Sheila & Lucy, and Jerry & Ruger.
+- Added the seven supplied testimonial photos as optimized WebP assets.
+- Added responsive testimonial cards with program/location context and expandable full-text sections for longer testimonials.
+- Preserved the supplied meaning and voice while cleaning minor punctuation/spacing for web readability.
+- Kept Mara & Alfredo as the lead full story and Brielle & Bear as the media-story feature.
+
+
+### v29 — First Client Story: Mara P. & Alfredo
+- Added the first approved Golden Heart client testimonial featuring Mara P. and Alfredo.
+- Added the supplied client/team photo as an optimized web image without altering the original composition.
+- Added a new **Client Stories** page with the full testimonial, Oklahoma attribution, PTSD / psychiatric-service-dog context, and nine-month team-training journey.
+- Added a featured testimonial section to the homepage with a short excerpt and link to the full story.
+- Added **Client Stories** to the shared footer and to the XML sitemap.
+- Kept the testimonial date as **June 8, 2026** without a weekday because the supplied weekday/date combination was internally inconsistent.
+
+
+### v28 — Nicole Policy Clarifications, Hours & Service-Dog Focus
+- Added confirmed business hours: Monday–Friday, 8:00 AM–5:00 PM Central Time, with additional appointments available by request outside regular hours.
+- Reframed Nicole Ingraham's credentials section around more than a decade of practical hands-on experience and learning under experienced professional trainers rather than unverified formal-certification claims.
+- Removed therapy-dog training from current public offerings across the homepage, Training page, FAQ, Contact page, inquiry-form categories, and supporting metadata.
+- Clarified long-distance travel: U.S. placements beyond approximately 900 miles are custom quoted; the $5,500–$8,000 range applies to international travel/placement logistics when applicable.
+- Added pediatric-placement guidance: children and minors are evaluated individually; a parent/legal guardian participates, and clients under age 13 or those needing additional assistance have a designated secondary handler.
+- Added careful medical-alert language emphasizing individual evaluation, demonstrated dog ability, temperament, training, and handler-specific need rather than guaranteed alert types.
+- Expanded Forever Care through service-dog retirement, including the typical 8–11 year retirement range, case-by-case retirement decisions, successor-dog planning, and the preference for retired dogs to remain with their handler when appropriate.
+- Added business hours to Contact and FAQ content and to homepage structured data.
+- Recorded `goldenheartservicedogs.com` as Nicole's approved target domain; canonical URLs remain on the current Workers domain until the custom domain is actually registered and connected.
+- Dog-profile self-editing remains a future CMS/admin option; the current site is a static Cloudflare/GitHub build and has no public admin dashboard.
+
+### v27 — Official Facebook Link
+- Added Golden Heart Service Dogs’ official Facebook page to the shared site footer.
+- Added a Facebook contact card to the Get Started page.
+- Added the official Facebook URL to the homepage Organization structured data via `sameAs`.
+- No program, pricing, dog-status, or placement data changed in this revision.
 
 ### v26 — Veterans Page Photo Formatting
 - Standardized the Veterans-page feature image to a true portrait-first 4:5 frame.
@@ -271,6 +306,18 @@ Changes:
 - Updated the homepage Veterans section with the confirmed **7 / 4** impact counts
 - Clarified the Our Dogs page so “Veteran Organization Placement” is not confused with a direct veteran client placement
 
+## v30 — Brielle & Bear Media Story
+
+Added the supplied Brielle and Bear media to Client Stories.
+
+Changes:
+- Added Brielle & Bear as a 2026 Golden Heart graduate team on the Client Stories page
+- Added the supplied Brielle/Bear photo
+- Added the supplied video with the audio track removed
+- Converted the video to browser-friendly MP4 with fast-start playback
+- Added responsive portrait-first media formatting for desktop and mobile
+- Did not invent testimonial wording or training details that were not supplied
+
 ## Deploy
 
 Cloudflare build settings:
@@ -290,6 +337,7 @@ The included `wrangler.jsonc` deploys the `public/` directory as Workers Static 
 - `public/training.html` — service-dog training and limited therapy-dog training
 - `public/process.html` — intake through Forever Care
 - `public/about.html` — Golden Heart and Nicole Ingraham
+- `public/stories.html` — client testimonials and success stories
 - `public/faq.html` — FAQ
 - `public/contact.html` — Formspree-ready initial inquiry form with phone/email fallback
 - `public/support.html` — professional, veteran-organization, referral, and community partnerships

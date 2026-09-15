@@ -2,6 +2,7 @@ const GH = {
   // Add the Formspree endpoint here when the form is created, e.g. https://formspree.io/f/abcdwxyz
   formEndpoint: '',
   formRecipient: 'gldnheartservicedogs@gmail.com',
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61584248185435',
   nav: [
     ['Home','/'],
     ['Service Dogs','/service-dogs'],
@@ -93,8 +94,8 @@ function renderFooter(){
       <div class="shell footer-grid">
         <div class="footer-brand"><img src="/assets/images/site/logo.png" alt="Golden Heart Service Dogs" width="300" height="160" loading="lazy" decoding="async"><p>More than a service dog. A lifelong partnership.</p></div>
         <div><h3>Explore</h3><a href="/service-dogs">Service Dogs</a><a href="/dogs">Our Dogs</a><a href="/veterans">Veterans</a><a href="/training">Training</a></div>
-        <div><h3>Learn</h3><a href="/process">Our Process</a><a href="/about">About Golden Heart</a><a href="/faq">FAQ</a><a href="/support">Partnerships</a></div>
-        <div><h3>Connect</h3><a href="/contact">Get Started</a><a href="mailto:gldnheartservicedogs@gmail.com">Email Golden Heart</a><a href="tel:+19184022071">918-402-2071</a><a href="/support">Professional & Community Partnerships</a></div>
+        <div><h3>Learn</h3><a href="/process">Our Process</a><a href="/stories">Client Stories</a><a href="/about">About Golden Heart</a><a href="/faq">FAQ</a><a href="/support">Partnerships</a></div>
+        <div><h3>Connect</h3><a href="/contact">Get Started</a><a href="mailto:gldnheartservicedogs@gmail.com">Email Golden Heart</a><a href="tel:+19184022071">918-402-2071</a><a href="${GH.facebookUrl}" target="_blank" rel="noopener noreferrer">Facebook</a><a href="/support">Professional & Community Partnerships</a><span class="footer-hours">Mon–Fri • 8 AM–5 PM CT</span></div>
       </div>
       <div class="shell footer-bottom"><span>© ${year} Golden Heart Service Dogs, LLC</span><span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/accessibility">Accessibility</a></span></div>
     </footer>`;
@@ -104,8 +105,6 @@ function enhanceForms(){
   const typeAliases={
     'service':'service-dog',
     'service-dog':'service-dog',
-    'therapy':'therapy-dog',
-    'therapy-dog':'therapy-dog',
     'veteran':'veteran',
     'veterans':'veteran',
     'partnership':'partnership',
