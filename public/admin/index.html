@@ -7,7 +7,7 @@
 <title>Golden Heart Admin</title>
 <link rel="icon" href="/assets/images/site/favicon.png">
 <link rel="stylesheet" href="/assets/css/admin.css">
-<script defer src="/assets/js/admin.js?v=44"></script>
+<script defer src="/assets/js/admin.js?v=45"></script>
 </head>
 <body>
 <header class="admin-header">
@@ -31,10 +31,9 @@
   <div class="form-grid">
     <label class="span-2">Name <input name="name" required maxlength="100" placeholder="Dog's name"></label>
     <label class="span-2">Handler / Client name <input name="handlerName" maxlength="120" placeholder="Optional — e.g. Scott"></label>
-    <label>Breed <input name="breed" maxlength="100"></label>
     <label>Sex <input name="sex" maxlength="60"></label>
     <label>Age <input name="age" maxlength="80" placeholder="1½ years"></label>
-    <label>Location <input name="location" maxlength="120"></label>
+    <label id="location-field" class="conditional-field" hidden>Placement location <input name="location" maxlength="120" placeholder="e.g. Oklahoma"></label>
     <label class="span-2">Status
       <select name="group" required>
         <option value="available">Available / Prospect</option>

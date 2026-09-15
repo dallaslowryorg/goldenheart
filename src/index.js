@@ -64,7 +64,7 @@ function statusForGroup(group) {
 }
 
 function buildDogBlurb(dog) {
-  const location = dog.location ? ` in ${dog.location}` : '';
+  const location = dog.group === 'graduate' && dog.location ? ` in ${dog.location}` : '';
   const handler = dog.handlerName ? ` with ${dog.handlerName}` : '';
   let sentence;
   if (dog.group === 'graduate') {
@@ -293,7 +293,7 @@ function dogPayload(body, existing = {}) {
     name,
     slug: slugify(body.slug || name),
     handlerName: nullable(body.handlerName ?? existing.handler_name, 120),
-    breed: nullable(body.breed ?? existing.breed, 100),
+    breed: nullable(existing.breed, 100),
     sex: nullable(body.sex ?? existing.sex, 60),
     age: nullable(body.age ?? existing.age, 80),
     location: nullable(body.location ?? existing.location, 120),

@@ -40,7 +40,7 @@ window.GOLDEN_HEART_PROGRAM_COUNTS = {
 };
 
 function dogCard(dog){
-  const chips=[dog.breed, dog.age, dog.sex, dog.location].filter(Boolean);
+  const chips=[dog.age, dog.sex, dog.group==='graduate'?dog.location:null].filter(Boolean);
   if(dog.veteranPlacement) chips.push('Veteran Placement');
   const statusClass=dog.group==='available'?'available':dog.group==='pending'?'pending':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
   const badgeLabel={available:'Available',pending:'Pending',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;

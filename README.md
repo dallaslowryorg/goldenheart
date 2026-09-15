@@ -2,9 +2,20 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v44**
+**Current revision: v45**
 
 ## Revision History
+
+
+### v45 — Dog Profile Field Cleanup
+
+- Removed **Breed** from the dog admin form and from public dog cards. Golden Heart no longer needs breed as a maintained profile field.
+- Existing legacy breed values remain harmlessly in D1 for backward compatibility, but the admin no longer edits them and the public site no longer displays them.
+- Changed **Location** to **Placement location** and made it conditional: it appears in the admin only when the dog is marked **Graduate**.
+- Public dog cards now show placement location only for graduates.
+- Existing non-graduate location values are preserved in D1 but hidden, so no historical data is destroyed.
+- Program-progress and graduation-year conditional behavior from v44 remains unchanged.
+- **Deployment: patch only.**
 
 ### v44 — Simplified Dog Admin Form
 
