@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://goldenheart.slowry.workers.dev/sitemap.xml
+Sitemap: https://goldenheartservicedogs.com/sitemap.xml

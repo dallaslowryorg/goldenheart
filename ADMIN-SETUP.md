@@ -1,6 +1,6 @@
-# Golden Heart v44 — Admin Setup
+# Golden Heart v47 — Admin Setup
 
-v32 added the Cloudflare-backed dog admin panel. Later revisions completed Access authentication, D1/R2 setup, Handler / Client names, Client Stories management, and dynamic public rendering. **v44 simplifies the dog editor for everyday use while preserving the existing D1 data model and current dog records.**
+v32 added the Cloudflare-backed dog admin panel. Later revisions completed Access authentication, D1/R2 setup, Handler / Client names, Client Stories management, and dynamic public rendering. **v47 reflects the live production domain while preserving the existing D1/R2 admin architecture and current records.**
 
 ## What v32 adds
 
@@ -31,12 +31,15 @@ Wrangler should create/bind the named R2 bucket on this deployment. If Cloudflar
 
 Do **not** protect the entire Golden Heart Worker, because the public website must remain public. Create a hostname/path-based Access application for the admin routes only.
 
-In **Zero Trust → Access → Applications**, create a self-hosted application and protect these paths on the current site:
+In **Zero Trust → Access → Applications**, the production admin paths are now protected at:
+
+- `goldenheartservicedogs.com/admin*`
+- `goldenheartservicedogs.com/api/admin*`
+
+The original Workers hostname may remain protected as a temporary fallback:
 
 - `goldenheart.slowry.workers.dev/admin*`
-- `goldenheart.slowry.workers.dev/api/admin/*`
-
-When the custom domain is connected later, add the equivalent `goldenheartservicedogs.com/admin*` and `goldenheartservicedogs.com/api/admin/*` paths.
+- `goldenheart.slowry.workers.dev/api/admin*`
 
 For the Allow policy, add **your email address only for the initial test**. Enable **One-time PIN** as a login method if it is not already enabled. Cloudflare will email a short-lived code when you sign in.
 
@@ -46,7 +49,7 @@ Nicole's email can be added to the same Access Allow policy later. Nothing in th
 
 Go to:
 
-`https://goldenheart.slowry.workers.dev/admin`
+`https://goldenheartservicedogs.com/admin`
 
 Sign in with the email you allowed in Access. The first dog-directory request initializes the D1 schema and, if the database is empty, imports the current dog roster automatically. v35 keeps `/api/admin/me` database-free and makes seeding idempotent; v36 fixes the schema-creation call so D1 can successfully create the `dogs` table on first load.
 

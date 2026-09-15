@@ -2,9 +2,20 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v46**
+**Current revision: v47**
 
 ## Revision History
+
+### v47 — Production .com Launch & SEO URLs
+
+- Switched all public canonical URLs from the temporary Workers address to **https://goldenheartservicedogs.com**.
+- Updated Open Graph and Twitter image/URL metadata to use the production `.com`.
+- Updated homepage Organization/WebSite structured data IDs, URLs, and logo URL to the production domain.
+- Updated `robots.txt` to advertise the production sitemap URL.
+- Updated every entry in `sitemap.xml` to the production domain.
+- No dog records, story records, D1 data, R2 media, or admin behavior changed.
+- The `workers.dev` hostname can remain enabled temporarily as a fallback while the production domain is validated.
+- **Deployment: patch only.**
 
 
 ### v46 — Dog Sex Dropdown
