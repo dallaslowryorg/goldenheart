@@ -37,12 +37,12 @@ async function load(){
 
 function render(){
   const q=search.value.trim().toLowerCase();
-  const dogs=state.dogs.filter(d=>!q||[d.name,d.breed,d.location,d.status,d.group,...(d.specialties||[])].filter(Boolean).join(' ').toLowerCase().includes(q));
+  const dogs=state.dogs.filter(d=>!q||[d.name,d.handlerName,d.breed,d.location,d.status,d.group,...(d.specialties||[])].filter(Boolean).join(' ').toLowerCase().includes(q));
   $('#dog-total').textContent=`${state.dogs.length} dog${state.dogs.length===1?'':'s'}`;
   if(!dogs.length){list.innerHTML='<p class="loading">No dogs match that search.</p>';return;}
   list.innerHTML=dogs.map(d=>`<article class="admin-card" data-id="${d.id}">
     ${d.image?`<img src="${esc(imageSrc(d.image))}" alt="">`:'<div class="no-thumb">No photo</div>'}
-    <div><h2>${esc(d.name)}</h2><span class="status-pill">${esc(groupLabel(d.group))}</span><p>${esc([d.breed,d.age,d.sex,d.location].filter(Boolean).join(' • '))}</p><p>${d.visible===false?'Hidden from public site':esc(d.status||'')}</p></div>
+    <div><h2>${esc(d.name)}</h2><span class="status-pill">${esc(groupLabel(d.group))}</span><p>${esc([d.breed,d.age,d.sex,d.location].filter(Boolean).join(' • '))}</p>${d.handlerName?`<p><strong>Handler:</strong> ${esc(d.handlerName)}</p>`:''}<p>${d.visible===false?'Hidden from public site':esc(d.status||'')}</p></div>
     <button class="button edit" type="button" data-edit="${d.id}">Edit</button>
   </article>`).join('');
 }
@@ -58,6 +58,7 @@ function openDog(dog=null){
   form.reset();
   form.elements.id.value=dog?.id||'';
   form.elements.name.value=dog?.name||'';
+  form.elements.handlerName.value=dog?.handlerName||'';
   form.elements.breed.value=dog?.breed||'';
   form.elements.sex.value=dog?.sex||'';
   form.elements.age.value=dog?.age||'';

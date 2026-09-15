@@ -1,7 +1,7 @@
 import { SEED_DOGS } from './seed-dogs.js';
 
 const SCHEMA_STATEMENTS = [
-  `CREATE TABLE IF NOT EXISTS dogs (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, name TEXT NOT NULL, breed TEXT, sex TEXT, age TEXT, location TEXT, status TEXT NOT NULL DEFAULT 'Available', progress TEXT, group_name TEXT NOT NULL DEFAULT 'available', image TEXT, image_filter TEXT, specialties TEXT NOT NULL DEFAULT '[]', blurb TEXT NOT NULL DEFAULT '', veteran_placement INTEGER NOT NULL DEFAULT 0, year TEXT, sort_order INTEGER NOT NULL DEFAULT 100, is_visible INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`,
+  `CREATE TABLE IF NOT EXISTS dogs (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, name TEXT NOT NULL, handler_name TEXT, breed TEXT, sex TEXT, age TEXT, location TEXT, status TEXT NOT NULL DEFAULT 'Available', progress TEXT, group_name TEXT NOT NULL DEFAULT 'available', image TEXT, image_filter TEXT, specialties TEXT NOT NULL DEFAULT '[]', blurb TEXT NOT NULL DEFAULT '', veteran_placement INTEGER NOT NULL DEFAULT 0, year TEXT, sort_order INTEGER NOT NULL DEFAULT 100, is_visible INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`,
   `CREATE INDEX IF NOT EXISTS idx_dogs_group ON dogs(group_name)`,
   `CREATE INDEX IF NOT EXISTS idx_dogs_sort ON dogs(sort_order, name)`
 ];
@@ -48,6 +48,7 @@ function rowToDog(row) {
     id: row.id,
     slug: row.slug,
     name: row.name,
+    handlerName: row.handler_name || undefined,
     breed: row.breed || undefined,
     sex: row.sex || undefined,
     age: row.age || undefined,
@@ -76,6 +77,16 @@ async function ensureDatabase(env) {
   for (const statement of SCHEMA_STATEMENTS) {
     await env.DB.prepare(statement).run();
   }
+
+  // Lightweight schema migrations for databases created by earlier revisions.
+  // D1/SQLite does not support ADD COLUMN IF NOT EXISTS, so inspect the table
+  // before applying each additive migration.
+  const columns = await env.DB.prepare('PRAGMA table_info(dogs)').all();
+  const columnNames = new Set((columns.results || []).map(column => column.name));
+  if (!columnNames.has('handler_name')) {
+    await env.DB.prepare('ALTER TABLE dogs ADD COLUMN handler_name TEXT').run();
+  }
+
   const row = await env.DB.prepare('SELECT COUNT(*) AS count FROM dogs').first();
   if (Number(row?.count || 0) > 0) return;
 
@@ -171,6 +182,7 @@ function dogPayload(body, existing = {}) {
   return {
     name,
     slug: slugify(body.slug || name),
+    handlerName: nullable(body.handlerName ?? existing.handler_name, 120),
     breed: nullable(body.breed, 100),
     sex: nullable(body.sex, 60),
     age: nullable(body.age, 80),
@@ -203,10 +215,10 @@ async function createDog(request, env) {
   const exists = await env.DB.prepare('SELECT id FROM dogs WHERE slug = ?').bind(dog.slug).first();
   if (exists) return json({ error: 'A dog with that name/slug already exists.' }, 409);
   const result = await env.DB.prepare(`
-    INSERT INTO dogs (slug,name,breed,sex,age,location,status,progress,group_name,image,image_filter,specialties,blurb,veteran_placement,year,sort_order,is_visible,updated_at)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+    INSERT INTO dogs (slug,name,handler_name,breed,sex,age,location,status,progress,group_name,image,image_filter,specialties,blurb,veteran_placement,year,sort_order,is_visible,updated_at)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
   `).bind(
-    dog.slug,dog.name,dog.breed,dog.sex,dog.age,dog.location,dog.status,dog.progress,dog.group,dog.image,dog.imageFilter,
+    dog.slug,dog.name,dog.handlerName,dog.breed,dog.sex,dog.age,dog.location,dog.status,dog.progress,dog.group,dog.image,dog.imageFilter,
     JSON.stringify(dog.specialties),dog.blurb,dog.veteranPlacement?1:0,dog.year,dog.sortOrder,dog.visible
   ).run();
   const created = await env.DB.prepare('SELECT * FROM dogs WHERE id = ?').bind(result.meta.last_row_id).first();
@@ -222,10 +234,10 @@ async function updateDog(id, request, env) {
   const conflict = await env.DB.prepare('SELECT id FROM dogs WHERE slug = ? AND id <> ?').bind(dog.slug, id).first();
   if (conflict) return json({ error: 'Another dog already uses that name/slug.' }, 409);
   await env.DB.prepare(`
-    UPDATE dogs SET slug=?,name=?,breed=?,sex=?,age=?,location=?,status=?,progress=?,group_name=?,image=?,image_filter=?,specialties=?,blurb=?,veteran_placement=?,year=?,sort_order=?,is_visible=?,updated_at=CURRENT_TIMESTAMP
+    UPDATE dogs SET slug=?,name=?,handler_name=?,breed=?,sex=?,age=?,location=?,status=?,progress=?,group_name=?,image=?,image_filter=?,specialties=?,blurb=?,veteran_placement=?,year=?,sort_order=?,is_visible=?,updated_at=CURRENT_TIMESTAMP
     WHERE id=?
   `).bind(
-    dog.slug,dog.name,dog.breed,dog.sex,dog.age,dog.location,dog.status,dog.progress,dog.group,dog.image,dog.imageFilter,
+    dog.slug,dog.name,dog.handlerName,dog.breed,dog.sex,dog.age,dog.location,dog.status,dog.progress,dog.group,dog.image,dog.imageFilter,
     JSON.stringify(dog.specialties),dog.blurb,dog.veteranPlacement?1:0,dog.year,dog.sortOrder,dog.visible,id
   ).run();
   const updated = await env.DB.prepare('SELECT * FROM dogs WHERE id = ?').bind(id).first();

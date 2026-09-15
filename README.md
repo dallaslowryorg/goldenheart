@@ -2,9 +2,19 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v40**
+**Current revision: v41**
 
 ## Revision History
+
+### v41 — Handler / Client Name Field
+
+- Added an optional **Handler / Client name** field to the dog admin form for both new and existing dogs.
+- Added an idempotent D1 schema migration that adds `handler_name` to existing databases without deleting or reseeding current dog records.
+- Added handler/client name to admin search and admin dog cards.
+- Public dog cards now show **Handler: Name** when a handler/client name has been entered; profiles with no handler remain unchanged.
+- Name, handler/client name, and location can all be edited independently from the admin panel.
+- **Deployment: patch only.**
+
 
 
 ### v40 — Stories Navigation

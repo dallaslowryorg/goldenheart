@@ -51,6 +51,7 @@ function dogCard(dog){
     <div class="dog-card-body">
       <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${badgeLabel}</span></div>
       ${chips.length?`<div class="chips">${chips.map(x=>`<span${x==='Veteran Placement'?' class="veteran-placement-chip"':''}>${x}</span>`).join('')}</div>`:''}
+      ${dog.handlerName?`<p class="dog-handler"><strong>Handler:</strong> ${dog.handlerName}</p>`:''}
       <p class="dog-stage">${dog.progress || stage}</p>
       ${dog.specialties?.length?`<p class="dog-specialties"><strong>Training focus:</strong> ${dog.specialties.join(' • ')}</p>`:''}
       <p class="dog-blurb">${dog.blurb}</p>

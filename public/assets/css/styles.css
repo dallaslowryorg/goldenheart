@@ -99,6 +99,7 @@ h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.07;margin:0 0
 .chips{margin:.7rem 0 .55rem}
 .chips span{font-size:.74rem;padding:.22rem .48rem;background:#fffaf0}
 .dog-stage{margin:.1rem 0 .45rem!important;color:var(--gold-dark)!important;font-weight:800;font-size:.8rem!important;line-height:1.35}
+.dog-handler{margin:.35rem 0 .2rem;color:var(--ink-soft,#655f55);font-size:.9rem;line-height:1.4}.dog-handler strong{color:var(--ink,#26231f)}
 .dog-blurb{margin-top:auto!important;padding-top:.25rem}
 .filter-count{display:inline-grid;place-items:center;min-width:1.4rem;height:1.4rem;padding:0 .32rem;margin-left:.2rem;border-radius:999px;background:var(--cream-2);color:var(--ink);font-size:.7rem;line-height:1}
 .filter-button.active .filter-count{background:rgba(255,255,255,.18);color:white}
