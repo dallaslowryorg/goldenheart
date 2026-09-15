@@ -2,9 +2,31 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v48**
+**Current revision: v50**
 
 ## Revision History
+
+### v50 — Program Progress Sync
+
+- Fixed stale program-progress wording after editing a dog. The admin card now displays the live **Program progress** field returned by D1 instead of any legacy status text.
+- Profile descriptions that contain a progress phrase such as **80% through** or **80% complete** are normalized to the dog's current Program progress percentage when the record is read or saved.
+- This fixes existing mismatches such as Oakley showing **70% through program** in the editor while an older description/card still said **80%**.
+- Custom profile wording that does not contain a percentage-based progress phrase is left unchanged.
+- Bumped the dog-admin script cache key to v50 so browsers load the corrected admin card immediately.
+- No D1 schema migration, R2 change, or Access change is required.
+- **Deployment: patch only.**
+
+
+### v49 — Dog Status Cleanup
+
+- Removed the obsolete free-form public-status text from dog admin cards. The Status dropdown is now the single source of truth for a dog's program stage.
+- Legacy D1 values such as **Available for Contract**, **Paired with Client**, and other older custom status wording are no longer exposed by the API or shown beneath the admin status badge.
+- Saving a dog now stores the standard status that corresponds to the selected Status group, preventing old hidden values from resurfacing later.
+- Public dog cards no longer print old free-form status wording. Graduates still show graduation year, dogs with Program progress still show that progress, and matched dogs without a progress value use the standard **Matched / In Training / Transitioning** label.
+- Existing dog records, photos, descriptions, handler names, training focus, visibility, and ordering are preserved.
+- Bumped dog/admin script cache keys so the cleanup appears immediately after deployment.
+- **Deployment: patch only.**
+
 
 ### v48 — Available Dogs Directory Priority
 

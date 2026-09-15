@@ -11,7 +11,7 @@ function imageSrc(image){
   return image.startsWith('/') ? image : `/assets/images/dogs/${image}`;
 }
 function esc(value=''){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function groupLabel(group){return ({available:'Available',pending:'Pending',matched:'Matched / Transitioning',partner:'Veteran Organization Placement',graduate:'Graduate'})[group]||group;}
+function groupLabel(group){return ({available:'Available',pending:'Pending',matched:'Matched / In Training / Transitioning',partner:'Veteran Organization Placement',graduate:'Graduate'})[group]||group;}
 
 function syncDogFields(){
   const group=form.elements.group.value;
@@ -55,7 +55,7 @@ function render(){
   if(!dogs.length){list.innerHTML='<p class="loading">No dogs match that search.</p>';return;}
   list.innerHTML=dogs.map(d=>`<article class="admin-card" data-id="${d.id}">
     ${d.image?`<img src="${esc(imageSrc(d.image))}" alt="">`:'<div class="no-thumb">No photo</div>'}
-    <div><h2>${esc(d.name)}</h2><span class="status-pill">${esc(groupLabel(d.group))}</span><p>${esc([d.age,d.sex,d.group==='graduate'?d.location:null].filter(Boolean).join(' • '))}</p>${d.handlerName?`<p><strong>Handler:</strong> ${esc(d.handlerName)}</p>`:''}<p>${d.visible===false?'Hidden from public site':esc(d.status||'')}</p></div>
+    <div><h2>${esc(d.name)}</h2><span class="status-pill">${esc(groupLabel(d.group))}</span><p>${esc([d.age,d.sex,d.group==='graduate'?d.location:null].filter(Boolean).join(' • '))}</p>${d.progress?`<p><strong>Program progress:</strong> ${esc(d.progress)}</p>`:''}${d.handlerName?`<p><strong>Handler:</strong> ${esc(d.handlerName)}</p>`:''}${d.visible===false?'<p>Hidden from public site</p>':''}</div>
     <button class="button edit" type="button" data-edit="${d.id}">Edit</button>
   </article>`).join('');
 }

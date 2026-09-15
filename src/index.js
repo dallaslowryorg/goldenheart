@@ -57,7 +57,7 @@ function statusForGroup(group) {
   return ({
     available: 'Available',
     pending: 'Pending',
-    matched: 'Matched / Transitioning',
+    matched: 'Matched / In Training / Transitioning',
     partner: 'Veteran Organization Placement',
     graduate: 'Graduate'
   })[group] || 'Available';
@@ -98,13 +98,13 @@ function rowToDog(row) {
     sex: row.sex || undefined,
     age: row.age || undefined,
     location: row.location || undefined,
-    status: row.status,
+    status: statusForGroup(row.group_name),
     progress: row.progress || undefined,
     group: row.group_name,
     image: row.image || undefined,
     imageFilter: row.image_filter || undefined,
     specialties,
-    blurb: row.blurb || '',
+    blurb: syncProgressInBlurb(row.blurb || '', row.progress, row.progress),
     veteranPlacement: Boolean(row.veteran_placement),
     year: row.year || undefined,
     sortOrder: row.sort_order,
@@ -283,12 +283,28 @@ function checkMutationOrigin(request) {
   return origin === expected;
 }
 
+function progressPercent(value) {
+  const match = String(value || '').match(/(\d{1,3})\s*%/);
+  return match ? match[1] : null;
+}
+
+function syncProgressInBlurb(blurb, oldProgress, newProgress) {
+  const newPct = progressPercent(newProgress);
+  if (!blurb || !newPct) return blurb;
+  const oldPct = progressPercent(oldProgress);
+  let updated = blurb;
+  if (oldPct && oldPct !== newPct) {
+    const oldPattern = new RegExp(`\\b${oldPct}\\s*%(?=\\s+(?:through|complete|completed)\\b)`, 'gi');
+    updated = updated.replace(oldPattern, `${newPct}%`);
+  }
+  return updated.replace(/\b\d{1,3}\s*%(?=\s+(?:through|complete|completed)\b)/gi, `${newPct}%`);
+}
+
 function dogPayload(body, existing = {}) {
   const groups = new Set(['available','pending','matched','partner','graduate']);
   const name = textValue(body.name ?? existing.name, 100);
   if (!name) throw new Error('Name is required.');
   const group = groups.has(body.group) ? body.group : (existing.group_name || 'available');
-  const sameGroup = Boolean(existing.group_name) && group === existing.group_name;
   const dog = {
     name,
     slug: slugify(body.slug || name),
@@ -297,7 +313,7 @@ function dogPayload(body, existing = {}) {
     sex: nullable(body.sex ?? existing.sex, 60),
     age: nullable(body.age ?? existing.age, 80),
     location: nullable(body.location ?? existing.location, 120),
-    status: body.status !== undefined ? textValue(body.status, 200) : (sameGroup && existing.status ? existing.status : statusForGroup(group)),
+    status: statusForGroup(group),
     progress: ['available','pending','matched'].includes(group) ? nullable(body.progress ?? existing.progress, 200) : null,
     group,
     image: nullable(body.image ?? existing.image, 500),
@@ -309,6 +325,7 @@ function dogPayload(body, existing = {}) {
     sortOrder: Number(existing.sort_order || 100),
     visible: body.visible === false || body.visible === 0 || body.visible === 'false' ? 0 : 1
   };
+  dog.blurb = syncProgressInBlurb(dog.blurb, existing.progress, dog.progress);
   if (!dog.blurb) dog.blurb = buildDogBlurb(dog);
   return dog;
 }

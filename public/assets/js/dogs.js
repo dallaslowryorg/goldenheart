@@ -44,7 +44,7 @@ function dogCard(dog){
   if(dog.veteranPlacement) chips.push('Veteran Placement');
   const statusClass=dog.group==='available'?'available':dog.group==='pending'?'pending':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
   const badgeLabel={available:'Available',pending:'Pending',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;
-  const stage=dog.group==='graduate' ? `${dog.year} Graduate` : dog.status;
+  const stage=dog.group==='graduate' ? `${dog.year ? `${dog.year} ` : ''}Graduate` : dog.group==='matched' ? 'Matched / In Training / Transitioning' : '';
   const imageStyle=`--dog-filter:${dog.imageFilter||'none'}`;
   return `<article class="dog-card group-${dog.group}${dog.veteranPlacement?' veteran-placement-card':''}" id="${dog.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
     <div class="dog-photo"><img loading="lazy" decoding="async" fetchpriority="low" style="${imageStyle}" src="${dog.image?.startsWith('/') ? dog.image : `/assets/images/dogs/${dog.image}`}" alt="${dog.name}, Golden Heart service dog${dog.group==='graduate'?' graduate':''}"></div>
@@ -52,7 +52,7 @@ function dogCard(dog){
       <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${badgeLabel}</span></div>
       ${chips.length?`<div class="chips">${chips.map(x=>`<span${x==='Veteran Placement'?' class="veteran-placement-chip"':''}>${x}</span>`).join('')}</div>`:''}
       ${dog.handlerName?`<p class="dog-handler"><strong>Handler:</strong> ${dog.handlerName}</p>`:''}
-      <p class="dog-stage">${dog.progress || stage}</p>
+      ${dog.progress || stage ? `<p class="dog-stage">${dog.progress || stage}</p>` : ''}
       ${dog.specialties?.length?`<p class="dog-specialties"><strong>Training focus:</strong> ${dog.specialties.join(' • ')}</p>`:''}
       <p class="dog-blurb">${dog.blurb}</p>
     </div>
