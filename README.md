@@ -2,9 +2,17 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v25**
+**Current revision: v26**
 
 ## Revision History
+
+### v26 — Veterans Page Photo Formatting
+- Standardized the Veterans-page feature image to a true portrait-first 4:5 frame.
+- Rebuilt the Public Access photo section as three equal portrait cards instead of a landscape mosaic.
+- Removed the repeated Ruby image from the Public Access section and replaced it with a separate training image.
+- Reformatted Graduation Milestones as consistent 3:4 portrait cards using `object-fit: contain` so graduation photos are not aggressively cropped.
+- Removed the tablet-only horizontal milestone-card treatment on the Veterans page.
+- Added mobile rules so veteran-team and graduation photos remain full-width portrait images without landscape recropping.
 
 ### v25 — Honey Pending Service-Dog Profile
 - Added Honey to the Our Dogs directory with the newly supplied portrait.
