@@ -22,10 +22,10 @@ window.GOLDEN_HEART_DOGS = [
   {name:'Bear', year:'2026', status:'Graduate', group:'graduate', image:'bear.webp', blurb:'Bear is a 2026 Golden Heart Service Dogs graduate.'},
   {name:'Rango', year:'2026', status:'Graduate', group:'graduate', image:'rango.webp', blurb:'Rango is a 2026 Golden Heart Service Dogs graduate.'},
   {name:'Ruby', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruby.webp', blurb:'Ruby is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
-  {name:'Whiskey', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruger-v11.webp', blurb:'Whiskey is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
+  {name:'Whiskey', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'whiskey-current.webp', blurb:'Whiskey is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Murphy', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'murphy.webp', blurb:'Murphy is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
   {name:'Remington', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'remington.webp', blurb:'Remington is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'},
-  {name:'Ruger', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'whiskey-v11.webp', blurb:'Ruger is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'}
+  {name:'Ruger', year:'2026', status:'Graduate', group:'graduate', veteranPlacement:true, image:'ruger-current.webp', blurb:'Ruger is a 2026 Golden Heart Service Dogs graduate and part of a veteran service-dog team.'}
 ];
 
 // Counts that include confirmed Golden Heart placements not shown as public dog profiles.
@@ -43,7 +43,7 @@ function dogCard(dog){
   const stage=dog.group==='graduate' ? `${dog.year} Graduate` : dog.status;
   const imageStyle=`--dog-filter:${dog.imageFilter||'none'}`;
   return `<article class="dog-card group-${dog.group}${dog.veteranPlacement?' veteran-placement-card':''}" id="${dog.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
-    <div class="dog-photo"><img loading="lazy" decoding="async" style="${imageStyle}" src="/assets/images/dogs/${dog.image}" alt="${dog.name}, Golden Heart service dog${dog.group==='graduate'?' graduate':''}"></div>
+    <div class="dog-photo"><img loading="lazy" decoding="async" fetchpriority="low" style="${imageStyle}" src="/assets/images/dogs/${dog.image}" alt="${dog.name}, Golden Heart service dog${dog.group==='graduate'?' graduate':''}"></div>
     <div class="dog-card-body">
       <div class="dog-title-row"><h3>${dog.name}</h3><span class="status status-${statusClass}">${badgeLabel}</span></div>
       ${chips.length?`<div class="chips">${chips.map(x=>`<span${x==='Veteran Placement'?' class="veteran-placement-chip"':''}>${x}</span>`).join('')}</div>`:''}

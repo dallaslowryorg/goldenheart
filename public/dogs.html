@@ -1,104 +1,115 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Our Dogs | Golden Heart Service Dogs</title>
-  <meta name="description" content="Meet Golden Heart service-dog prospects, matched teams, veteran-organization placements, veteran client placements, and graduates. Follow each dog's journey from prospect to partnership.">
-  <meta name="theme-color" content="#35584a">
-  <link rel="icon" type="image/png" href="/assets/images/site/favicon.png">
-  <link rel="stylesheet" href="/assets/css/styles.css">
-  <script defer src="/assets/js/site.js"></script>
-  <script defer src="/assets/js/dogs.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Our Dogs | Golden Heart Service Dogs</title>
+<meta content="Meet available service-dog prospects, matched and transitioning dogs, veteran-organization placements, veteran client teams, and Golden Heart graduates." name="description"/>
+<meta content="#35584a" name="theme-color"/>
+<link href="/assets/images/site/favicon.png" rel="icon" type="image/png"/>
+<!-- v13 SEO -->
+<meta content="index,follow,max-image-preview:large" name="robots"/>
+<link href="https://goldenheart.slowry.workers.dev/dogs" rel="canonical"/>
+<meta content="Golden Heart Service Dogs" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Our Dogs | Golden Heart Service Dogs" property="og:title"/>
+<meta content="Meet available service-dog prospects, matched and transitioning dogs, veteran-organization placements, veteran client teams, and Golden Heart graduates." property="og:description"/>
+<meta content="https://goldenheart.slowry.workers.dev/dogs" property="og:url"/>
+<meta content="https://goldenheart.slowry.workers.dev/assets/images/site/logo.png" property="og:image"/>
+<meta content="Golden Heart Service Dogs logo" property="og:image:alt"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Our Dogs | Golden Heart Service Dogs" name="twitter:title"/>
+<meta content="Meet available service-dog prospects, matched and transitioning dogs, veteran-organization placements, veteran client teams, and Golden Heart graduates." name="twitter:description"/>
+<meta content="https://goldenheart.slowry.workers.dev/assets/images/site/logo.png" name="twitter:image"/>
+<link href="/assets/images/site/favicon.png" rel="apple-touch-icon"/>
+<link href="/site.webmanifest" rel="manifest"/>
+<!-- /v13 SEO -->
+<link href="/assets/css/styles.css" rel="stylesheet"/>
+<script defer="" src="/assets/js/site.js"></script>
+<script defer="" src="/assets/js/dogs.js"></script>
 </head>
 <body>
-  <div id="site-header"></div>
-  <main id="main">
-    <section class="page-hero">
-      <div class="shell" data-reveal>
-        <p class="eyebrow">Our Dogs</p>
-        <h1>Follow the journey from prospect to graduate.</h1>
-        <p>See dogs currently available, dogs already matched with clients, dogs placed with partner veteran organizations, and Golden Heart graduates. Veteran client placements remain in each dog's actual program stage and are identified on the individual dog card.</p>
-      </div>
-    </section>
-
-    <div class="band-photo"><img src="/assets/images/site/dogs-group.webp" alt="A group of Golden Heart dogs sitting together outdoors"></div>
-
-    <section class="section dog-directory-section">
-      <div class="shell">
-        <div class="dog-summary" aria-label="Golden Heart dog roster summary" data-reveal>
-          <div class="dog-summary-item"><strong data-dog-count="available">0</strong><span>Available</span></div>
-          <div class="dog-summary-item"><strong data-dog-count="matched">0</strong><span>Matched / Transitioning</span></div>
-          <div class="dog-summary-item"><strong data-dog-count="partner">0</strong><span>Partner Placements</span></div>
-          <div class="dog-summary-item"><strong data-dog-count="graduate">0</strong><span>Graduates</span></div>
-        </div>
-
-        <div class="dog-directory-head" data-reveal>
-          <div>
-            <p class="eyebrow">Explore the roster</p>
-            <h2>Every dog has a different place in the journey.</h2>
-          </div>
-          <p>Use the filters to see dogs by their current program stage. Availability can change as evaluations, contracts, matching, placement, and graduation progress.</p>
-        </div>
-
-        <div class="dog-filters" aria-label="Filter dogs by program stage">
-          <button class="filter-button active" type="button" data-dog-filter="all" aria-pressed="true">All Dogs</button>
-          <button class="filter-button" type="button" data-dog-filter="available" aria-pressed="false">Available</button>
-          <button class="filter-button" type="button" data-dog-filter="matched" aria-pressed="false">Matched / Transitioning</button>
-          <button class="filter-button" type="button" data-dog-filter="partner" aria-pressed="false">Veteran Organization Placements</button>
-          <button class="filter-button" type="button" data-dog-filter="graduate" aria-pressed="false">Graduates</button>
-        </div>
-
-        <div class="dog-grid" data-dog-grid aria-live="polite" aria-atomic="false"></div>
-        <p class="note dog-directory-note">Availability changes as dogs are evaluated, contracted, matched, placed, and graduated. Dogs paired directly with veteran clients remain listed under their actual program stage and carry a <strong>Veteran Placement</strong> tag. Veteran organization placements are tracked separately. Contact Golden Heart for the most current status and fit information.</p>
-      </div>
-    </section>
-
-    <section class="section section-cream">
-      <div class="shell">
-        <div class="section-head" data-reveal>
-          <div>
-            <p class="eyebrow">Understanding the journey</p>
-            <h2>What each status means.</h2>
-            <p>A dog's status reflects where that dog currently is in Golden Heart's training, matching, placement, or graduation process.</p>
-          </div>
-        </div>
-        <div class="status-guide">
-          <article class="status-guide-card status-guide-available" data-reveal>
-            <span class="status status-available">Available</span>
-            <h3>Available / Prospect</h3>
-            <p>The dog may be available for contract or being evaluated as a future service-dog prospect. Final matching depends on fit, needs, temperament, and training progress.</p>
-          </article>
-          <article class="status-guide-card status-guide-matched" data-reveal>
-            <span class="status status-matched">Matched</span>
-            <h3>Matched / Transitioning</h3>
-            <p>The dog has been paired with a client or is moving through transition and full-time placement. The dog is no longer available.</p>
-          </article>
-          <article class="status-guide-card status-guide-partner" data-reveal>
-            <span class="status status-partner">Partner Placement</span>
-            <h3>Veteran Organization Placement</h3>
-            <p>The dog has been transferred or placed with a veteran organization and is continuing its path through that partner program. This is separate from a Golden Heart dog paired directly with an individual veteran client.</p>
-          </article>
-          <article class="status-guide-card status-guide-graduate" data-reveal>
-            <span class="status status-graduate">Graduate</span>
-            <h3>Golden Heart Graduate</h3>
-            <p>The team has completed Golden Heart's formal training and transition process and has reached the graduation milestone.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="shell dog-cta" data-reveal>
-        <div>
-          <p class="eyebrow">Looking for the right partner?</p>
-          <h2>Start with a conversation, not a dog selection.</h2>
-          <p>Golden Heart considers the prospective handler's needs, daily life, home environment, compatibility, and the individual dog's temperament and abilities before determining whether a match may be appropriate.</p>
-        </div>
-        <div class="button-row"><a class="button button-dark" href="/contact">Start the Golden Heart Process</a><a class="button" href="/process">How Matching Works</a></div>
-      </div>
-    </section>
-  </main>
-  <div id="site-footer"></div>
+<div id="site-header"></div>
+<main id="main">
+<section class="page-hero">
+<div class="shell" data-reveal="">
+<p class="eyebrow">Our Dogs</p>
+<h1>Follow the journey from prospect to graduate.</h1>
+<p>See dogs currently available, dogs already matched with clients, dogs placed with partner veteran organizations, and Golden Heart graduates. Veteran client placements remain in each dog's actual program stage and are identified on the individual dog card.</p>
+</div>
+</section>
+<div class="band-photo"><img alt="A group of Golden Heart dogs sitting together outdoors" decoding="async" loading="lazy" src="/assets/images/site/dogs-group.webp"/></div>
+<section class="section dog-directory-section">
+<div class="shell">
+<div aria-label="Golden Heart dog roster summary" class="dog-summary" data-reveal="" role="group">
+<div class="dog-summary-item"><strong data-dog-count="available">0</strong><span>Available</span></div>
+<div class="dog-summary-item"><strong data-dog-count="matched">0</strong><span>Matched / Transitioning</span></div>
+<div class="dog-summary-item"><strong data-dog-count="partner">0</strong><span>Partner Placements</span></div>
+<div class="dog-summary-item"><strong data-dog-count="graduate">0</strong><span>Graduates</span></div>
+</div>
+<div class="dog-directory-head" data-reveal="">
+<div>
+<p class="eyebrow">Explore the roster</p>
+<h2>Every dog has a different place in the journey.</h2>
+</div>
+<p>Use the filters to see dogs by their current program stage. Availability can change as evaluations, contracts, matching, placement, and graduation progress.</p>
+</div>
+<div aria-label="Filter dogs by program stage" class="dog-filters" role="group">
+<button aria-controls="dog-roster" aria-pressed="true" class="filter-button active" data-dog-filter="all" type="button">All Dogs</button>
+<button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="available" type="button">Available</button>
+<button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="matched" type="button">Matched / Transitioning</button>
+<button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="partner" type="button">Veteran Organization Placements</button>
+<button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="graduate" type="button">Graduates</button>
+</div>
+<div aria-atomic="false" aria-live="polite" class="dog-grid" data-dog-grid="" id="dog-roster"></div>
+<p class="note dog-directory-note">Availability changes as dogs are evaluated, contracted, matched, placed, and graduated. Dogs paired directly with veteran clients remain listed under their actual program stage and carry a <strong>Veteran Placement</strong> tag. Veteran organization placements are tracked separately. Contact Golden Heart for the most current status and fit information.</p>
+</div>
+</section>
+<section class="section section-cream">
+<div class="shell">
+<div class="section-head" data-reveal="">
+<div>
+<p class="eyebrow">Understanding the journey</p>
+<h2>What each status means.</h2>
+<p>A dog's status reflects where that dog currently is in Golden Heart's training, matching, placement, or graduation process.</p>
+</div>
+</div>
+<div class="status-guide">
+<article class="status-guide-card status-guide-available" data-reveal="">
+<span class="status status-available">Available</span>
+<h3>Available / Prospect</h3>
+<p>The dog may be available for contract or being evaluated as a future service-dog prospect. Final matching depends on fit, needs, temperament, and training progress.</p>
+</article>
+<article class="status-guide-card status-guide-matched" data-reveal="">
+<span class="status status-matched">Matched</span>
+<h3>Matched / Transitioning</h3>
+<p>The dog has been paired with a client or is moving through transition and full-time placement. The dog is no longer available.</p>
+</article>
+<article class="status-guide-card status-guide-partner" data-reveal="">
+<span class="status status-partner">Partner Placement</span>
+<h3>Veteran Organization Placement</h3>
+<p>The dog has been transferred or placed with a veteran organization and is continuing its path through that partner program. This is separate from a Golden Heart dog paired directly with an individual veteran client.</p>
+</article>
+<article class="status-guide-card status-guide-graduate" data-reveal="">
+<span class="status status-graduate">Graduate</span>
+<h3>Golden Heart Graduate</h3>
+<p>The team has completed Golden Heart's formal training and transition process and has reached the graduation milestone.</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="shell dog-cta" data-reveal="">
+<div>
+<p class="eyebrow">Looking for the right partner?</p>
+<h2>Start with a conversation, not a dog selection.</h2>
+<p>Golden Heart considers the prospective handler's needs, daily life, home environment, compatibility, and the individual dog's temperament and abilities before determining whether a match may be appropriate.</p>
+</div>
+<div class="button-row"><a class="button button-dark" href="/contact?type=service-dog">Start the Golden Heart Process</a><a class="button" href="/process">How Matching Works</a></div>
+</div>
+</section>
+</main>
+<div id="site-footer"></div>
 </body>
 </html>
