@@ -1,15 +1,18 @@
 window.GOLDEN_HEART_DOGS = [
   {name:'Dumbledore', age:'2 years', status:'Available for Contract', group:'available', image:'dumbledore.webp', blurb:'Dumbledore is currently available for contract. Matching is based on compatibility, lifestyle, disability-related needs, temperament, and training fit.'},
+  {name:'Macaroni', sex:'Male', age:'11 months', status:'Available for Pairing / Contract', progress:'Level 2 Candidate • Possible Level 3', group:'available', image:'macaroni.webp', blurb:'Macaroni is currently available for pairing and contract. He is being evaluated as a Level 2 candidate with the potential for Level 3 placement depending on the handler’s needs, task requirements, and final training fit.'},
   {name:'Nala', age:'4 months', sex:'Female', status:'Available Service Dog Prospect', group:'available', image:'nala.webp', blurb:'Nala is in early foundational development and evaluation as Golden Heart assesses her strengths and future service-dog fit.'},
   {name:'Nemo', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'nemo.webp', blurb:'Nemo is in early foundational development and evaluation as a service-dog prospect.'},
   {name:'Mushu', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'mushu.webp', blurb:'Mushu is continuing foundational training and evaluation as a service-dog prospect.'},
   {name:'Mulan', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'mulan.webp', blurb:'Mulan is continuing foundational training and evaluation as a service-dog prospect.'},
   {name:'Ariel', age:'4 months', status:'Available Service Dog Prospect', group:'available', image:'ariel.webp', blurb:'Ariel is continuing foundational training and evaluation as a service-dog prospect.'},
 
+  {name:'Honey', sex:'Female', age:'7 months', status:'Pending', progress:'Status Pending', group:'pending', image:'honey.webp', specialties:['Medical Alert','Psychiatric Support'], blurb:"Honey's current status is pending. Her training focus includes medical alert and psychiatric support."},
+
   {name:'Oakley', breed:'Golden Retriever', sex:'Female', age:'1½ years', location:'Oklahoma', status:'Matched with Client • 80% Complete', progress:'80% through program', group:'matched', image:'oakley.webp', specialties:['Psychiatric Support','Autism Support'], blurb:'Oakley is approximately 80% through her Golden Heart program for a client in Oklahoma. Her training is focused on psychiatric support and autism support.'},
   {name:'Winston', location:'Arkansas', status:'Transitioning to Full-Time • Graduating Soon', group:'matched', image:'winston.webp', imageFilter:'saturate(.82) brightness(.96)', blurb:'Winston is preparing to transition into full-time placement with a client in Arkansas and is nearing graduation.'},
   {name:'Flounder', breed:'Golden Retriever', sex:'Male', age:'11 months', location:'Florida', status:'Paired with Client • Midway', progress:'Midway through program', group:'matched', image:'flounder.webp', specialties:['PTSD','Psychiatric Support','Autism Support'], blurb:'Flounder is midway through his Golden Heart program for a client in Florida. His training is focused on PTSD, psychiatric support, and autism support.'},
-  {name:'Max', breed:'Golden Retriever', sex:'Male', age:'1 year', location:'Connecticut', status:'Paired with Veteran Client • 75% Complete', progress:'75% through program', group:'matched', veteranPlacement:true, image:'max.webp', specialties:['PTSD','Psychiatric Support','Detection','Bedbug Detection','Educational Tool'], blurb:'Max is approximately 75% through his Golden Heart program. Next month, he is scheduled to transition to Connecticut full-time with his veteran handler. His training includes PTSD and psychiatric support, detection work, bedbug detection, and educational work.'},
+  {name:'Max', breed:'Golden Retriever', sex:'Male', age:'1 year', location:'Connecticut', status:'Paired with Client • 75% Complete', progress:'75% through program', group:'matched', image:'max.webp', specialties:['PTSD','Psychiatric Support','Detection','Bedbug Detection','Educational Tool'], blurb:'Max is approximately 75% through his Golden Heart program. Next month, he is scheduled to transition to Connecticut full-time with his person. His training includes PTSD and psychiatric support, detection work, bedbug detection, and educational work.'},
   {name:'Liberty', breed:'Golden Retriever', sex:'Female', age:'1½ years', location:'Michigan', status:'Midway Through Program', progress:'Midway through program', group:'matched', image:'liberty.webp', specialties:['PTSD','Psychiatric Support','Autism Support'], blurb:'Liberty is midway through her Golden Heart program and is preparing for work with her client in Michigan. Her training is focused on PTSD, psychiatric support, and autism support.'},
   {name:'Lily', age:'8 months', location:'Oklahoma', status:'Paired with Client', group:'matched', image:'lily.webp', blurb:'Lily has been paired with a client in Oklahoma and is no longer available.'},
 
@@ -39,8 +42,8 @@ window.GOLDEN_HEART_PROGRAM_COUNTS = {
 function dogCard(dog){
   const chips=[dog.breed, dog.age, dog.sex, dog.location].filter(Boolean);
   if(dog.veteranPlacement) chips.push('Veteran Placement');
-  const statusClass=dog.group==='available'?'available':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
-  const badgeLabel={available:'Available',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;
+  const statusClass=dog.group==='available'?'available':dog.group==='pending'?'pending':dog.group==='graduate'?'graduate':dog.group==='partner'?'partner':'matched';
+  const badgeLabel={available:'Available',pending:'Pending',matched:'Matched',partner:'Partner Placement',graduate:'Graduate'}[dog.group] || dog.status;
   const stage=dog.group==='graduate' ? `${dog.year} Graduate` : dog.status;
   const imageStyle=`--dog-filter:${dog.imageFilter||'none'}`;
   return `<article class="dog-card group-${dog.group}${dog.veteranPlacement?' veteran-placement-card':''}" id="${dog.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
@@ -56,7 +59,7 @@ function dogCard(dog){
 }
 
 function renderDogs(){
-  const validFilters=['all','available','matched','partner','graduate'];
+  const validFilters=['all','available','pending','matched','partner','graduate'];
   const hashFilter=window.location.hash.replace('#','');
 
   document.querySelectorAll('[data-dog-grid]').forEach(grid=>{

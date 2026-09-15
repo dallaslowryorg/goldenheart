@@ -36,7 +36,7 @@
 <div class="shell" data-reveal="">
 <p class="eyebrow">Our Dogs</p>
 <h1>Follow the journey from prospect to graduate.</h1>
-<p>See dogs currently available, dogs already matched with clients, dogs placed with partner veteran organizations, and Golden Heart graduates. Veteran client placements remain in each dog's actual program stage and are identified on the individual dog card.</p>
+<p>See dogs currently available, dogs with a pending status, dogs already matched with clients, dogs placed with partner veteran organizations, and Golden Heart graduates. Veteran client placements remain in each dog's actual program stage and are identified on the individual dog card.</p>
 </div>
 </section>
 <div class="band-photo"><img alt="A group of Golden Heart dogs sitting together outdoors" decoding="async" loading="lazy" src="/assets/images/site/dogs-group.webp"/></div>
@@ -44,6 +44,7 @@
 <div class="shell">
 <div aria-label="Golden Heart dog roster summary" class="dog-summary" data-reveal="" role="group">
 <div class="dog-summary-item"><strong data-dog-count="available">0</strong><span>Available</span></div>
+<div class="dog-summary-item"><strong data-dog-count="pending">0</strong><span>Pending</span></div>
 <div class="dog-summary-item"><strong data-dog-count="matched">0</strong><span>Matched / Transitioning</span></div>
 <div class="dog-summary-item"><strong data-dog-count="partner">0</strong><span>Partner Placements</span></div>
 <div class="dog-summary-item"><strong data-dog-count="graduate">0</strong><span>Graduates</span></div>
@@ -58,6 +59,7 @@
 <div aria-label="Filter dogs by program stage" class="dog-filters" role="group">
 <button aria-controls="dog-roster" aria-pressed="true" class="filter-button active" data-dog-filter="all" type="button">All Dogs</button>
 <button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="available" type="button">Available</button>
+<button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="pending" type="button">Pending</button>
 <button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="matched" type="button">Matched / Transitioning</button>
 <button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="partner" type="button">Veteran Organization Placements</button>
 <button aria-controls="dog-roster" aria-pressed="false" class="filter-button" data-dog-filter="graduate" type="button">Graduates</button>
@@ -80,6 +82,11 @@
 <span class="status status-available">Available</span>
 <h3>Available / Prospect</h3>
 <p>The dog may be available for contract or being evaluated as a future service-dog prospect. Final matching depends on fit, needs, temperament, and training progress.</p>
+</article>
+<article class="status-guide-card status-guide-pending" data-reveal="">
+<span class="status status-pending">Pending</span>
+<h3>Pending</h3>
+<p>The dog's next public program stage has not yet been finalized. Contact Golden Heart for the most current status and pairing information.</p>
 </article>
 <article class="status-guide-card status-guide-matched" data-reveal="">
 <span class="status status-matched">Matched</span>

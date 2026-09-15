@@ -2,23 +2,67 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v18**
+**Current revision: v25**
 
 ## Revision History
+
+### v25 — Honey Pending Service-Dog Profile
+- Added Honey to the Our Dogs directory with the newly supplied portrait.
+- Added confirmed details: female, 7 months old, current status **Pending**.
+- Added her confirmed training focus: **Medical Alert** and **Psychiatric Support**.
+- Added a separate Pending roster category, filter, count, badge style, and status-guide explanation so Honey is not inaccurately shown as Available or Matched.
+
+### v24 — Forever Care Photo Replacement
+- Replaced the homepage Forever Care image with the newly supplied photo of three young Golden Retrievers.
+- Removed Ruby from that homepage feature image so the section now uses a warmer general Golden Heart training image rather than an individual graduate portrait.
+- Updated the image alt text to describe the three Golden Retrievers accurately.
+- Ruby’s Our Dogs profile, veteran-placement classification, and Veterans-page imagery remain unchanged.
+
+### v23 — Macaroni Available Candidate Profile
+- Added Macaroni to the Our Dogs directory with the newly supplied portrait.
+- Added confirmed details: male, 11 months old, available for pairing/contract.
+- Added his current program assessment as a **Level 2 candidate with possible Level 3 potential**, subject to final client needs, task complexity, and training fit.
+- Available-dog counts now update automatically through the existing dynamic roster logic.
+
+### v22 — Dumbledore Photo Update
+- Replaced Dumbledore's Our Dogs profile image with the newer supplied portrait.
+- No changes were made to Dumbledore's availability or profile details.
+
+### v21 — Ruby Forever Care Photo Update
+- Replaced the resting/office photo of Ruby with a happier confirmed Ruby graduation portrait.
+- Updated the homepage Forever Care image to show Ruby wearing her graduation cap and Grad Squad bandana.
+- Updated the same Ruby image used in the Veterans public-access photo mosaic so the older resting photo is no longer shown publicly.
+- Left Ruby’s Our Dogs graduate profile and veteran-placement classification unchanged.
+
+### v20 — Veteran Placement Total Restored to 7
+- Kept Max correctly classified as a non-veteran client match.
+- Restored the confirmed veteran-client placement total to **7** based on the clarified overall Golden Heart count.
+- The five veteran-placement dogs with public profiles remain Ruby, Whiskey, Murphy, Remington, and Ruger.
+- Two additional confirmed veteran placements are included in the total without public dog profile cards.
+- Veteran-organization placements remain a separate total of **4**.
+- Updated the homepage, Veterans page, dynamic program count, and revision documentation.
+
+### v19 — Max Veteran-Placement Classification Correction
+- Corrected Max on the Our Dogs page: he is paired with a client in Connecticut but is **not** a veteran placement.
+- Removed the Veteran Placement tag from Max and changed his status to “Paired with Client • 75% Complete.”
+- Updated Max’s profile language to refer to his person/handler without identifying the client as a veteran.
+- Temporarily reduced the veteran-client placement total from 7 to **6** based on the list then available; v20 restores the confirmed overall total to **7** after clarification.
+- Veterans page at that revision showed five public veteran-placement dog profiles plus one additional placement; v20 updates the non-public remainder to two while keeping Max excluded from veteran classification.
+- Veteran-organization placements remain unchanged at 4.
 
 ### v18 — Expanded Dog Profiles: Max, Liberty, Flounder, Rango & Oakley
 - Added Liberty to the Our Dogs roster with her supplied photo and confirmed profile: Golden Retriever, female, 1½ years old, midway through her program, Michigan, with PTSD, psychiatric-support, and autism-support training focus.
 - Updated Flounder with the newly supplied photo and confirmed profile: Golden Retriever, male, 11 months old, midway through his program, Florida, with PTSD, psychiatric-support, and autism-support training focus.
 - Updated Rango with the newly supplied handler photo and confirmed graduate profile: Golden Retriever, male, 1½ years old, 2026 graduate in Alabama, with PTSD, psychiatric-support, and autism-support training focus.
 - Updated Oakley with the newly supplied photo and confirmed profile: Golden Retriever, female, 1½ years old, approximately 80% through her program in Oklahoma, with psychiatric-support and autism-support training focus.
-- Reconfirmed Max's supplied lake-side portrait and existing profile: Golden Retriever, male, 1 year old, approximately 75% through his program, transitioning to Connecticut full-time with his veteran handler next month, with PTSD, psychiatric-support, detection, bedbug-detection, and educational work.
+- Reconfirmed Max's supplied lake-side portrait and existing profile: Golden Retriever, male, 1 year old, approximately 75% through his program, transitioning to Connecticut full-time with his person next month, with PTSD, psychiatric-support, detection, bedbug-detection, and educational work.
 - Matched/transitioning roster count now includes Liberty automatically through the dynamic dog-directory count.
 
 
 ### v17 — Max Profile & Transition Update
 - Replaced Max's Our Dogs / Veterans roster image with the newly supplied lake-side service-dog portrait.
 - Added Max's confirmed breed and sex: Golden Retriever, male, age 1 year.
-- Updated Max to approximately 75% through his program and scheduled to transition to Connecticut full-time with his veteran handler next month.
+- Updated Max to approximately 75% through his program and scheduled to transition to Connecticut full-time with his person next month.
 - Added Max's confirmed training focus: PTSD, psychiatric support, detection, bedbug detection, and educational work.
 - Expanded dog cards to support optional breed, program-progress, and training-focus details when confirmed for an individual dog.
 
@@ -210,9 +254,9 @@ Changes:
 Corrected the distinction between dogs paired directly with veteran clients and dogs placed with veteran organizations, and updated the site to reflect the confirmed Golden Heart veteran placement count.
 
 Changes:
-- Added **7 confirmed veteran client placements** as a separate program count
+- Added **7 confirmed veteran client placements** as a separate program count. v19 temporarily reduced the total after Max was clarified as a non-veteran match; v20 restores the confirmed overall total to **7** while keeping Max excluded.
 - Kept **4 veteran organization placements** separate from direct veteran client placements
-- Marked Ruby, Remington, Ruger, Whiskey, Max, and Murphy as public veteran-placement profiles
+- Marked Ruby, Remington, Ruger, Whiskey, Max, and Murphy as public veteran-placement profiles at that revision; Max was later removed from the veteran-placement classification in v19.
 - Included one additional confirmed veteran placement in the total without publishing a public photo/profile
 - Added a **Veteran Placement** tag to applicable dog cards while preserving each dog’s actual program stage
 - Reworked the Veterans page with veteran-impact counts, public veteran team profiles, and a separate veteran-organization placement section
