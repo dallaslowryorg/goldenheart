@@ -69,3 +69,14 @@ Test in this order:
 ## Backup / rollback
 
 The v31 hard-coded roster remains bundled in `public/assets/js/dogs.js` as a public-site fallback. D1 becomes the live source once available. Before future structural database changes, export D1 or take a Cloudflare backup if available in your account.
+
+
+## Client Stories admin (v42+)
+
+The existing Cloudflare Access application already covers the Client Stories admin because `/admin*` and `/api/admin*` are protected. No additional Access application is required.
+
+- Dogs: `/admin`
+- Client Stories: `/admin/stories`
+- Public stories API: `/api/stories`
+
+The first request after deploying v42 creates and seeds the D1 `stories` table from the currently approved stories. Story images and optional videos uploaded from the admin panel use the existing `DOG_IMAGES` R2 binding under the `stories/` prefix.

@@ -2,9 +2,22 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v41**
+**Current revision: v42**
 
 ## Revision History
+
+
+### v42 — Client Stories Admin
+
+- Added a protected **Stories** section at `/admin/stories` alongside the existing dog-directory admin.
+- Client stories can now be **added, edited, hidden/shown, reordered, and deleted** without a site deployment.
+- Added editable story fields for title/team name, tags, highlight quote, full testimonial, attribution, photo alt text, display order, expandable/full-text behavior, and visibility.
+- Added R2-backed story photo uploads and optional MP4/WebM video uploads.
+- Added a D1 `stories` table and automatic one-time seed of the nine currently approved Client Stories. Existing dog records are not changed or reseeded.
+- Updated `/stories` to load the live published story records from D1 while retaining the current static cards as a fail-safe if the API is temporarily unavailable.
+- Added Dogs / Stories navigation inside the admin panel.
+- Existing Cloudflare Access protection on `/admin*` and `/api/admin*` automatically covers the new Stories admin. No new Access, D1, or R2 setup is required.
+- **Deployment: patch only.**
 
 ### v41 — Handler / Client Name Field
 

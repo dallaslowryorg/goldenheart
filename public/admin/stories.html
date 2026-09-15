@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Golden Heart Admin — Client Stories</title>
+<link rel="icon" href="/assets/images/site/favicon.png">
+<link rel="stylesheet" href="/assets/css/admin.css?v=42">
+<script defer src="/assets/js/admin-stories.js?v=42"></script>
+</head>
+<body>
+<header class="admin-header">
+  <div><p class="kicker">Golden Heart Service Dogs</p><h1>Client Stories Admin</h1><nav class="admin-nav"><a href="/admin">Dogs</a><a class="active" href="/admin/stories">Stories</a></nav></div>
+  <div class="admin-user"><span id="admin-user">Signed in</span><a href="/stories" target="_blank" rel="noopener">View public page ↗</a></div>
+</header>
+<main class="admin-shell">
+  <section class="admin-toolbar" aria-label="Client stories controls">
+    <div><strong id="story-total">0 stories</strong><span id="save-status" role="status" aria-live="polite"></span></div>
+    <div class="toolbar-actions"><input id="story-search" type="search" placeholder="Search stories" aria-label="Search stories"><button class="button primary" id="add-story" type="button">+ Add Story</button></div>
+  </section>
+  <section id="admin-alert" class="admin-alert" hidden role="alert"></section>
+  <section id="story-list" class="admin-list" aria-live="polite"><p class="loading">Loading client stories…</p></section>
+</main>
+
+<dialog id="story-dialog" class="dog-dialog">
+<form id="story-form" method="dialog">
+  <div class="dialog-header"><div><p class="kicker">Client story</p><h2 id="dialog-title">Add Story</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button></div>
+  <input type="hidden" name="id">
+  <input type="hidden" name="image">
+  <input type="hidden" name="video">
+  <div class="form-grid">
+    <label class="span-2">Story title / team name <input name="title" required maxlength="160" placeholder="Scott & Ruby"></label>
+    <label class="span-2">Tags <textarea name="tags" rows="3" placeholder="Oklahoma&#10;Veteran&#10;PTSD&#10;Psychiatric Support"></textarea><small>One per line or comma-separated. These display as the pill labels.</small></label>
+    <label class="span-2">Highlight quote <textarea name="quote" rows="3" maxlength="3000" placeholder="Short pull quote shown prominently on the card."></textarea></label>
+    <label class="span-2">Full story / testimonial <textarea name="body" rows="10" maxlength="20000" placeholder="Enter the full testimonial. Separate paragraphs with a blank line."></textarea></label>
+    <label class="span-2">Attribution line <input name="attribution" maxlength="500" placeholder="Scott • Oklahoma veteran"></label>
+    <label class="span-2">Photo alt text <input name="imageAlt" maxlength="500" placeholder="Scott with service dog Ruby"></label>
+    <label>Display order <input name="sortOrder" type="number" step="1" value="100"></label>
+    <label>Video note <input name="videoNote" maxlength="500" placeholder="Video provided without audio."></label>
+    <fieldset class="span-2 checks"><legend>Display</legend><label><input type="checkbox" name="collapseBody" checked> Put full testimonial behind “Read full testimonial”</label><label><input type="checkbox" name="visible" checked> Show on public site</label></fieldset>
+    <div class="span-2 photo-editor">
+      <div class="photo-preview-wrap"><img id="photo-preview" alt="Current story photo" hidden><div id="photo-empty">No photo selected</div></div>
+      <div><label>Story photo <input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label><small>Uploads are resized in your browser before being saved. JPG, PNG or WebP recommended.</small><button type="button" class="button subtle" id="clear-photo">Remove photo from story</button></div>
+    </div>
+    <div class="span-2 media-editor">
+      <div id="video-preview-wrap" class="video-preview-wrap"><span id="video-empty">No video attached</span><video id="video-preview" controls playsinline hidden></video></div>
+      <div><label>Optional video <input id="video-file" type="file" accept="video/mp4,video/webm"></label><small>MP4 or WebM, up to 80 MB. Existing static videos can remain attached.</small><button type="button" class="button subtle" id="clear-video">Remove video from story</button></div>
+    </div>
+  </div>
+  <div class="dialog-footer"><button class="button danger" id="delete-story" type="button" hidden>Delete Story</button><div class="right-actions"><button class="button subtle" id="cancel-dialog" type="button">Cancel</button><button class="button primary" id="save-story" type="submit">Save Story</button></div></div>
+</form>
+</dialog>
+</body>
+</html>
