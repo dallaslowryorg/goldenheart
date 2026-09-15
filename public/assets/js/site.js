@@ -65,20 +65,20 @@ function renderFooter(){
         <div class="footer-brand"><img src="/assets/images/site/logo.png" alt="Golden Heart Service Dogs" width="300" height="160"><p>More than a service dog. A lifelong partnership.</p></div>
         <div><h3>Explore</h3><a href="/service-dogs">Service Dogs</a><a href="/dogs">Our Dogs</a><a href="/veterans">Veterans</a><a href="/training">Training</a></div>
         <div><h3>Learn</h3><a href="/process">Our Process</a><a href="/about">About Golden Heart</a><a href="/faq">FAQ</a><a href="/support">Partner With Us</a></div>
-        <div><h3>Connect</h3><a href="/contact">Get Started</a><a href="/contact#general">General Questions</a><a href="/contact#partnership">Partnership / Sponsorship</a><p class="muted">Contact details and social links can be added once confirmed.</p></div>
+        <div><h3>Connect</h3><a href="/contact">Get Started</a><a href="/contact#general">General Questions</a><a href="/contact#partnership">Partnership / Sponsorship</a><a href="/support">Partner With Us</a></div>
       </div>
       <div class="shell footer-bottom"><span>© ${year} Golden Heart Service Dogs, LLC</span><span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/accessibility">Accessibility</a></span></div>
     </footer>`;
 }
 
 function enhanceForms(){
-  document.querySelectorAll('form[data-demo-form]').forEach(form=>{
+  document.querySelectorAll('form[data-inquiry-form]').forEach(form=>{
     form.addEventListener('submit',e=>{
       e.preventDefault();
       const note=form.querySelector('.form-message');
       if(note){
         note.hidden=false;
-        note.textContent='This form is ready for a secure form endpoint. Connect Formspree, Cloudflare Forms/Worker, or another approved service before launch.';
+        note.textContent='Online inquiry submission is being finalized. Your information has not been sent. Please check back soon or use Golden Heart’s current direct contact method.';
         note.focus?.();
       }
     });
