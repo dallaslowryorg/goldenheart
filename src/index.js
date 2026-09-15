@@ -1,31 +1,10 @@
 import { SEED_DOGS } from './seed-dogs.js';
 
-const SCHEMA = `
-CREATE TABLE IF NOT EXISTS dogs (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  slug TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  breed TEXT,
-  sex TEXT,
-  age TEXT,
-  location TEXT,
-  status TEXT NOT NULL DEFAULT 'Available',
-  progress TEXT,
-  group_name TEXT NOT NULL DEFAULT 'available',
-  image TEXT,
-  image_filter TEXT,
-  specialties TEXT NOT NULL DEFAULT '[]',
-  blurb TEXT NOT NULL DEFAULT '',
-  veteran_placement INTEGER NOT NULL DEFAULT 0,
-  year TEXT,
-  sort_order INTEGER NOT NULL DEFAULT 100,
-  is_visible INTEGER NOT NULL DEFAULT 1,
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-CREATE INDEX IF NOT EXISTS idx_dogs_group ON dogs(group_name);
-CREATE INDEX IF NOT EXISTS idx_dogs_sort ON dogs(sort_order, name);
-`;
+const SCHEMA_STATEMENTS = [
+  `CREATE TABLE IF NOT EXISTS dogs (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, name TEXT NOT NULL, breed TEXT, sex TEXT, age TEXT, location TEXT, status TEXT NOT NULL DEFAULT 'Available', progress TEXT, group_name TEXT NOT NULL DEFAULT 'available', image TEXT, image_filter TEXT, specialties TEXT NOT NULL DEFAULT '[]', blurb TEXT NOT NULL DEFAULT '', veteran_placement INTEGER NOT NULL DEFAULT 0, year TEXT, sort_order INTEGER NOT NULL DEFAULT 100, is_visible INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`,
+  `CREATE INDEX IF NOT EXISTS idx_dogs_group ON dogs(group_name)`,
+  `CREATE INDEX IF NOT EXISTS idx_dogs_sort ON dogs(sort_order, name)`
+];
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
@@ -91,7 +70,12 @@ function rowToDog(row) {
 
 async function ensureDatabase(env) {
   if (!env.DB) throw new Error('D1 binding DB is not configured.');
-  await env.DB.exec(SCHEMA);
+  // D1Database.exec() splits input on newlines. A multi-line CREATE TABLE would
+  // therefore be treated as an incomplete first statement. Run each complete
+  // schema statement separately through the prepared-statement API instead.
+  for (const statement of SCHEMA_STATEMENTS) {
+    await env.DB.prepare(statement).run();
+  }
   const row = await env.DB.prepare('SELECT COUNT(*) AS count FROM dogs').first();
   if (Number(row?.count || 0) > 0) return;
 

@@ -2,9 +2,19 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v35**
+**Current revision: v36**
 
 ## Revision History
+
+
+### v36 — D1 Schema Initialization Fix
+- Fixed the first-run D1 schema error `incomplete input: SQLITE_ERROR` shown when creating the `dogs` table.
+- Root cause: D1 `exec()` splits multiple SQL queries on newline boundaries, while the previous schema passed a multi-line `CREATE TABLE` statement through `exec()`.
+- Schema creation now runs each complete `CREATE TABLE` / `CREATE INDEX` statement separately through D1 prepared statements.
+- Verified the resulting schema locally with SQLite and rechecked Worker JavaScript syntax.
+- No Access-policy, R2, dog-profile, photo, or public-site content changes.
+- **Deployment: patch only.**
+
 
 ### v35 — First-Run D1 Initialization Hardening
 - Fixed a first-run race condition in the admin panel where `/api/admin/me` and `/api/admin/dogs` could initialize/seed D1 at the same time.
