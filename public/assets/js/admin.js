@@ -16,7 +16,10 @@ function groupLabel(group){return ({available:'Available',pending:'Pending',matc
 async function api(path,options={}){
   const response=await fetch(path,{headers:{'Accept':'application/json',...(options.body instanceof FormData?{}:{'Content-Type':'application/json'}),...(options.headers||{})},...options});
   const payload=await response.json().catch(()=>({}));
-  if(!response.ok) throw new Error(payload.error||`Request failed (${response.status})`);
+  if(!response.ok){
+    const detail=payload.detail?`: ${payload.detail}`:'';
+    throw new Error((payload.error||`Request failed (${response.status})`)+detail);
+  }
   return payload;
 }
 

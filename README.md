@@ -2,9 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v34**
+**Current revision: v35**
 
 ## Revision History
+
+### v35 — First-Run D1 Initialization Hardening
+- Fixed a first-run race condition in the admin panel where `/api/admin/me` and `/api/admin/dogs` could initialize/seed D1 at the same time.
+- `/api/admin/me` no longer touches D1, so only the dog-directory request performs first-run initialization.
+- Seed inserts now use `INSERT OR IGNORE`, making initial seeding idempotent if two requests ever reach an empty database concurrently.
+- Admin API errors now display the server-provided detail message, making future D1/R2 setup issues much easier to diagnose.
+- No schema, R2, Access-policy, or public-site data changes.
+- **Deployment: patch only.**
+
 
 ### v34 — Cloudflare Access + Static Assets Authentication Fix
 - Fixed the admin authentication bridge for the Worker Static Assets architecture.

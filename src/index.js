@@ -96,7 +96,7 @@ async function ensureDatabase(env) {
   if (Number(row?.count || 0) > 0) return;
 
   const statements = SEED_DOGS.map((dog, index) => env.DB.prepare(`
-    INSERT INTO dogs (
+    INSERT OR IGNORE INTO dogs (
       slug,name,breed,sex,age,location,status,progress,group_name,image,image_filter,
       specialties,blurb,veteran_placement,year,sort_order,is_visible
     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)
@@ -317,11 +317,15 @@ export default {
       if (path.startsWith('/api/admin/')) {
         const auth = await requireAdmin(request, ctx, env, false);
         if (auth instanceof Response) return auth;
-        await ensureDatabase(env);
 
+        // /me does not require D1. Keeping it database-free prevents the admin
+        // bootstrap request from racing the initial dog-directory seed.
         if (path === '/api/admin/me' && request.method === 'GET') {
           return json({ email: auth.identity.email || '', name: auth.identity.name || '' });
         }
+
+        await ensureDatabase(env);
+
         if (path === '/api/admin/dogs' && request.method === 'GET') {
           return json({ dogs: await listDogs(env, true) });
         }

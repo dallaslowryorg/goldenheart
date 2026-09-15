@@ -1,6 +1,6 @@
-# Golden Heart v33 — Admin Setup
+# Golden Heart v35 — Admin Setup
 
-v32 added the Cloudflare-backed dog admin panel. The first v32 deployment successfully created the D1 database but failed while adding the new R2 binding. **v33 fixes that binding configuration. If your GitHub repository already contains the v32 files, use the v33 patch only.**
+v32 added the Cloudflare-backed dog admin panel. v33 fixed the D1/R2 bindings, v34 fixed Cloudflare Access authentication behind Static Assets, and **v35 hardens first-run D1 initialization so the initial admin requests cannot race each other while seeding the dog directory.**
 
 ## What v32 adds
 
@@ -48,7 +48,7 @@ Go to:
 
 `https://goldenheart.slowry.workers.dev/admin`
 
-Sign in with the email you allowed in Access. The first request initializes the D1 schema and, if the database is empty, imports the current dog roster automatically.
+Sign in with the email you allowed in Access. The first dog-directory request initializes the D1 schema and, if the database is empty, imports the current dog roster automatically. v35 makes this seed operation idempotent and keeps `/api/admin/me` database-free so first-run requests cannot race each other.
 
 Test in this order:
 
