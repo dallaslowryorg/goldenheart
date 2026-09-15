@@ -2,9 +2,20 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v37**
+**Current revision: v38**
 
 ## Revision History
+
+### v38 — Client Stories Photo Sizing & Placement
+- Standardized every Client Stories card to a consistent portrait-friendly photo stage instead of forcing portrait source photos into landscape crops.
+- Changed testimonial images from `object-fit: cover` to `object-fit: contain` so handlers, dogs, graduation scenes, and vertical photos are not cropped.
+- Added a consistent cream photo background and inset treatment so different source aspect ratios still look intentional.
+- Limited desktop/tablet/mobile photo-stage heights so images stay prominent without dominating each testimonial card.
+- Removed the former tablet/mobile landscape aspect-ratio overrides that recropped photos at different screen widths.
+- Kept the two-column desktop testimonial grid and single-column mobile layout.
+- No testimonial text, D1/R2/admin, dog profiles, or other site content changed.
+- **Deployment: patch only.**
+
 
 
 ### v37 — Client Stories Equal-Card Layout
