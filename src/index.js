@@ -6,11 +6,20 @@ const SCHEMA_STATEMENTS = [
   `CREATE INDEX IF NOT EXISTS idx_dogs_group ON dogs(group_name)`,
   `CREATE INDEX IF NOT EXISTS idx_dogs_sort ON dogs(sort_order, name)`,
   `CREATE TABLE IF NOT EXISTS stories (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, title TEXT NOT NULL, tags TEXT NOT NULL DEFAULT '[]', quote TEXT NOT NULL DEFAULT '', body TEXT NOT NULL DEFAULT '', attribution TEXT NOT NULL DEFAULT '', image TEXT, image_alt TEXT, video TEXT, video_note TEXT, collapse_body INTEGER NOT NULL DEFAULT 1, sort_order INTEGER NOT NULL DEFAULT 100, is_visible INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`,
-  `CREATE INDEX IF NOT EXISTS idx_stories_sort ON stories(sort_order, title)`
+  `CREATE INDEX IF NOT EXISTS idx_stories_sort ON stories(sort_order, title)`,
+  `CREATE TABLE IF NOT EXISTS site_migrations (migration_key TEXT PRIMARY KEY, applied_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`
 ];
 
 
-const LEGACY_UNPROFILED_VETERAN_PLACEMENTS = 2;
+const LEGACY_UNPROFILED_VETERAN_PLACEMENTS = 3;
+
+const REMOVED_PHOTO_PATHS = new Set([
+  '/assets/images/dogs/ruby.webp',
+  '/assets/images/site/ruby-happy.webp',
+  '/assets/images/testimonials/scott-ruby.webp'
+]);
+const PRIVACY_PHOTO_MIGRATION = 'v54-remove-scott-ruby-photos';
+const PRIVACY_CONTENT_MIGRATION = 'v55-remove-scott-ruby-profile-story';
 
 const JSON_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
@@ -193,6 +202,55 @@ function storyPayload(body, existing = {}) {
   };
 }
 
+async function applyPrivacyPhotoRemoval(env) {
+  const applied = await env.DB.prepare('SELECT migration_key FROM site_migrations WHERE migration_key = ?').bind(PRIVACY_PHOTO_MIGRATION).first();
+  if (applied) return;
+
+  const ruby = await env.DB.prepare("SELECT image FROM dogs WHERE lower(name) = 'ruby' LIMIT 1").first();
+  const scottRuby = await env.DB.prepare("SELECT image FROM stories WHERE lower(title) = 'scott & ruby' LIMIT 1").first();
+
+  await env.DB.batch([
+    env.DB.prepare("UPDATE dogs SET image = NULL, image_filter = NULL, updated_at = CURRENT_TIMESTAMP WHERE lower(name) = 'ruby'"),
+    env.DB.prepare("UPDATE stories SET image = NULL, image_alt = '', updated_at = CURRENT_TIMESTAMP WHERE lower(title) = 'scott & ruby'")
+  ]);
+
+  if (env.DOG_IMAGES) {
+    for (const asset of [ruby?.image, scottRuby?.image]) {
+      if (asset?.startsWith('/media/')) {
+        const key = decodeURIComponent(asset.replace(/^\/media\//, ''));
+        try { await env.DOG_IMAGES.delete(key); } catch {}
+      }
+    }
+  }
+
+  await env.DB.prepare('INSERT OR IGNORE INTO site_migrations (migration_key) VALUES (?)').bind(PRIVACY_PHOTO_MIGRATION).run();
+}
+
+
+async function applyPrivacyContentRemoval(env) {
+  const applied = await env.DB.prepare('SELECT migration_key FROM site_migrations WHERE migration_key = ?').bind(PRIVACY_CONTENT_MIGRATION).first();
+  if (applied) return;
+
+  const ruby = await env.DB.prepare("SELECT image FROM dogs WHERE lower(name) = 'ruby' LIMIT 1").first();
+  const scottRuby = await env.DB.prepare("SELECT image, video FROM stories WHERE lower(title) = 'scott & ruby' LIMIT 1").first();
+
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM dogs WHERE lower(name) = 'ruby'"),
+    env.DB.prepare("DELETE FROM stories WHERE lower(title) = 'scott & ruby'")
+  ]);
+
+  if (env.DOG_IMAGES) {
+    for (const asset of [ruby?.image, scottRuby?.image, scottRuby?.video]) {
+      if (asset?.startsWith('/media/')) {
+        const key = decodeURIComponent(asset.replace(/^\/media\//, ''));
+        try { await env.DOG_IMAGES.delete(key); } catch {}
+      }
+    }
+  }
+
+  await env.DB.prepare('INSERT OR IGNORE INTO site_migrations (migration_key) VALUES (?)').bind(PRIVACY_CONTENT_MIGRATION).run();
+}
+
 async function ensureDatabase(env) {
   if (!env.DB) throw new Error('D1 binding DB is not configured.');
   // D1Database.exec() splits input on newlines. A multi-line CREATE TABLE would
@@ -240,6 +298,9 @@ async function ensureDatabase(env) {
     ));
     if (statements.length) await env.DB.batch(statements);
   }
+
+  await applyPrivacyPhotoRemoval(env);
+  await applyPrivacyContentRemoval(env);
 }
 
 function getCookieValue(cookieHeader, name) {
@@ -557,6 +618,10 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    if (REMOVED_PHOTO_PATHS.has(path)) {
+      return withSecurityHeaders(new Response('Not found', { status: 404 }), { 'cache-control': 'no-store' });
+    }
 
     try {
       if (path === '/api/dogs' && request.method === 'GET') {

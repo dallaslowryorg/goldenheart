@@ -2,9 +2,31 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v53**
+**Current revision: v55**
 
 ## Revision History
+
+### v55 — Ruby Profile / Scott & Ruby Story Removal
+
+- Removed the Ruby dog profile from the public roster and bundled fallback/seed data.
+- Removed the Scott & Ruby client story/testimonial from the Stories page and bundled fallback/seed data.
+- Added a one-time D1 privacy migration that deletes the live Ruby dog record and Scott & Ruby story record. Any associated R2 image/video objects are also deleted when present.
+- Preserved the confirmed veteran-placement total at 7 by moving Ruby from the public-profile count into the unprofiled-placement baseline: 4 public veteran profiles + 3 confirmed placements without public profiles.
+- Replaced remaining Scott/Ruby-specific admin form placeholders with generic examples.
+- The v54 photo-removal protections remain in place, including 404 handling for the retired static Ruby/Scott image URLs.
+- **Deployment: patch only.**
+
+### v54 — Scott / Ruby Photo Removal
+
+- Removed all confirmed public photos of Scott and Ruby from the website while preserving the Ruby dog profile and the Scott & Ruby testimonial text.
+- Removed Ruby's profile photo from the bundled dog roster and removed the Scott & Ruby testimonial photo from the bundled Stories data.
+- Replaced Ruby-specific homepage and Veterans-page feature images with other Golden Heart dog imagery.
+- Removed the known static photo files for Ruby / Scott & Ruby from the full-site build.
+- Added a one-time D1 privacy migration that clears the current Ruby dog image and Scott & Ruby story image from the live database. If either current image is stored in R2, the migration also deletes that uploaded object.
+- Added route protection so the three known old static photo URLs return 404 even when deploying the patch over an older working copy that still contains those files.
+- Updated dog-card rendering so Ruby's profile remains clean and usable without a photo.
+- No dog placement counts, veteran classifications, testimonial wording, handler data, or form configuration were changed.
+- **Deployment: patch only.**
 
 ### v53 — Homepage Facebook Follow Callout
 

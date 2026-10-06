@@ -20,16 +20,6 @@ export const SEED_STORIES = [
     collapseBody: false
   },
   {
-    title: 'Scott & Ruby',
-    tags: ['Oklahoma','Veteran','PTSD','Psychiatric Support'],
-    quote: 'There are times when I don’t even have to say a word—she just knows.',
-    body: `Golden Heart Service Dogs has had a lasting impact on my life through the incredible work they put into training Ruby.\n\nFrom the very beginning, it was clear that Ruby had been given an amazing foundation. Her training goes beyond commands—it shows in her confidence, her calm presence, and the way she instinctively knows how to respond in the moments that matter most.\n\nThere are times when I don’t even have to say a word; she just knows. That kind of awareness and connection doesn’t happen by accident. It comes from the dedication, time, and heart that Golden Heart Service Dogs pours into every dog they train.\n\nI especially want to recognize Nicole, the founder and trainer, whose work with Ruby truly shines through every single day. The care, attention, and passion she puts into each dog is evident, and it made all the difference. Her staff is just as incredible—professional, supportive, and clearly committed to the success of every dog they work with.\n\nRuby isn’t just well-trained; she’s steady, dependable, and always there when I need her. Because of that, I have a sense of comfort and confidence that I didn’t have before.\n\nI will always be grateful for Golden Heart Service Dogs, Nicole, and her amazing team for shaping Ruby into the partner she is today.`,
-    attribution: 'Scott • Oklahoma veteran',
-    image: '/assets/images/testimonials/scott-ruby.webp',
-    imageAlt: 'Scott with service dog Ruby at a Golden Heart graduation event',
-    collapseBody: true
-  },
-  {
     title: 'Solomon & Whiskey',
     tags: ['Oklahoma','Veteran','PTSD','Psychiatric Support'],
     quote: 'Whiskey has already made a meaningful impact, and I’m grateful for everything that led to us being paired together.',
