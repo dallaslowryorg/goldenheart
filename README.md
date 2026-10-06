@@ -2,9 +2,18 @@
 
 Static Cloudflare Workers site for **Golden Heart Service Dogs, LLC**.
 
-**Current revision: v55**
+**Current revision: v56**
 
 ## Revision History
+
+### v56 — Remaining Ruby Graduation Photo Removal
+
+- Removed the graduation photo the user identified as Ruby from both the homepage and the Veterans page.
+- Replaced the homepage Graduation card with Ruger’s actual graduation photo.
+- Replaced the Veterans-page Prepared Together card with Whiskey graduation imagery.
+- Removed the old `/assets/images/site/grad-ruger.webp` asset from the full-site build and added that URL to the Worker privacy block list so it returns 404 even if an older static copy still exists.
+- No D1 dog/story records, veteran counts, R2 media, admin behavior, or forms were changed.
+- **Deployment: patch only.**
 
 ### v55 — Ruby Profile / Scott & Ruby Story Removal
 

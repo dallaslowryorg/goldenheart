@@ -16,7 +16,8 @@ const LEGACY_UNPROFILED_VETERAN_PLACEMENTS = 3;
 const REMOVED_PHOTO_PATHS = new Set([
   '/assets/images/dogs/ruby.webp',
   '/assets/images/site/ruby-happy.webp',
-  '/assets/images/testimonials/scott-ruby.webp'
+  '/assets/images/testimonials/scott-ruby.webp',
+  '/assets/images/site/grad-ruger.webp'
 ]);
 const PRIVACY_PHOTO_MIGRATION = 'v54-remove-scott-ruby-photos';
 const PRIVACY_CONTENT_MIGRATION = 'v55-remove-scott-ruby-profile-story';
